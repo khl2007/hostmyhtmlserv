@@ -1,0 +1,416 @@
+﻿
+var E_AJAX_NOT_SUPPORTED = "-3000";
+var E_AJAX_SERVER_ERROR = "-3001";
+var E_APPLET_NOT_INITIALIZED = "-3002";
+var E_APPLET_INTERNAL_ERROR = "-3003";
+var E_APPLET_INTERRUPT_CAPTURE = "-3004";
+var E_IDCARD_EXTENSION_NATIVE_INSTALLED_PARTIALLY = "-3005";
+var E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION = "-3006";
+
+var ERRORS= new Array();
+
+ERRORS["-1"] = "قيمة خاطئة";
+ERRORS["-2"] = "فارغ";
+ERRORS["-3"] = "لم يستطع التعرف";
+ERRORS["-4"] = "لايوجد جهاز قارئ متصل";
+ERRORS["-5"] = "أكثر من قارئ متصل بنفس رقم بطاقة الاحوال";
+ERRORS["-6"] = "فارغ";
+ERRORS["-7"] = "استثناء أمان";
+ERRORS["-8"] = "بطاقة مجهولة";
+ERRORS["-9"] = "لم يتم ادخال البطاقة";
+ERRORS["-10"] = "خطأ الخادم";
+
+ERRORS["-11"] = "رابط اعادة التوجيه خاطئ";
+ERRORS["-12"] = "فشل التحقق";
+ERRORS["-13"] = "فشل";
+
+ERRORS["-14"] = "غير معرف";
+
+ERRORS["-15"] = "لم يتم ادخال كلمة المرور لمرة واحده";
+
+ERRORS["-16"] = "خطأ عام";
+
+ERRORS["-404"] = "لم يتم ايجاد الطلب";
+ERRORS["-500"] = "خطأ في الطلب";
+
+
+
+ERRORS["-63C5"] = "ادخال خاطئ باقي 5 محاولات";
+ERRORS["-63C4"] = "ادخال خاطئ باقي 4 محاولات";
+ERRORS["-63C3"] = "ادخال خاطئ باقي 3 محاولات";
+ERRORS["-63C2"] = "ادخال خاطئ باقي 2 محاولات";
+ERRORS["-63C1"] = "ادخال خاطئ باقي محاولة";
+ERRORS["-63C0"] = "الرقم مقفل";
+ERRORS["-6700"] = "Wrong APDU data length";
+ERRORS["-6730"] = "لم يتم ايجاد المدخلات";
+ERRORS["-6732"] = "Data gap error";
+ERRORS["-6736"] = "No header selected";
+ERRORS["-6738"] = "لايوجد بيانات للتواصل";
+ERRORS["-6740"] = "غير فارغ";
+ERRORS["-6742"] = "Invalid key, i.e. key used is not appropriate";
+ERRORS["-6744"] = "Invalid data, i.e. expected data syntax mismatch";
+ERRORS["-6746"] = "Invalid challenge, i.e. card challenge does not match";
+ERRORS["-6748"] = "Invalid hash, i.e. hash value does not match";
+ERRORS["-6750"] = "Invalid CMD, i.e. CMD does not match";
+ERRORS["-6752"] = "Invalid INS";
+ERRORS["-6754"] = "Invalid Offset in the temporary buffer";
+ERRORS["-6760"] = "Write corrupted flag is set – Data is corrupted";
+ERRORS["-6762"] = "Write outdated flag is set – Data is outdated";
+ERRORS["-6764"] = "TAG length not supported";
+ERRORS["-6766"] = "TAG length invalid";
+ERRORS["-6768"] = "TAG unexpected";
+ERRORS["-6770"] = "DER encoding error";
+ERRORS["-6772"] = "Wrong role ID";
+ERRORS["-6774"] = "Card challenge not generated";
+ERRORS["-6776"] = "Entity public key not set";
+ERRORS["-6778"] = "Date format not supported";
+ERRORS["-6780"] = "الشهادة منتهيه";
+ERRORS["-6784"] = "Boundary is exceeded";
+ERRORS["-6900"] = "Check case error";
+ERRORS["-6982"] = "Credentials are not fulfilled";
+ERRORS["-6A83"] = "Delegation error / File not found";
+ERRORS["-6A84"] = "ممتلئ";
+ERRORS["-6A86"] = "Incorrect P1 P2";
+ERRORS["-6A89"] = "التكرار غير مسموح";
+//ERRORS["-6D00"] = "Unknown instruction / INS not supported";
+ERRORS["-6E00"] = "CLA not supported";
+ERRORS["-9700"] = "البطاقه مقفله";
+ERRORS["-6982"] = "Credentials are not fulfilled";
+
+ERRORS["-1001"] = "خطأ الخادم";
+ERRORS["-1002"] = "خطأ الخادم ";
+ERRORS["-1003"] = "خطأ الخادم";
+ERRORS["-1004"] = "رسالة التحقق غير صحيحه";
+ERRORS["-1005"] = "رسالة التحقق غير صحيحه";
+ERRORS["-1006"] = "انتهى وقت التحقق";
+ERRORS["-1007"] = "فشل التحقق";
+ERRORS["-1008"] = "انتهت الشهادة";
+ERRORS["-1009"] = "الشهادة غير متاحة";
+ERRORS["-1010"] = "الشهادة ليس لها علاقة بالتحقق";
+ERRORS["-1011"] = "لم يتم ايجاد مصدر الشهادة";
+ERRORS["-1012"] = "لم يتم ايجاد مصدر شهادة CDP";
+ERRORS["-1013"] = "خطأ الخادم";
+ERRORS["-1014"] = "لايمكن استرجاع الرابط";
+ERRORS["-1015"] = "الشهادة ألغيت";
+ERRORS["-1016"] = "لايوجد رابط";
+ERRORS["-1017"] = "رابط خاطئ";
+ERRORS["-1018"] = "لم يتم ايجاد مصدر الرابط";
+ERRORS["-1019"] = "لم يتم ايجاد مصدر الرابط";
+ERRORS["-1020"] = "انتهى الذهاب إلى الرابط";
+ERRORS["-1021"] = "لايستطيع التحميل من هذا الموقع";
+ERRORS["-1022"] = "توقيع الرابط غير صالح";
+
+ERRORS["-1023"] = "لايوجد رابط";
+
+ERRORS["-2001"] = "لم يتم التعرف على الخدمه";
+ERRORS["-2002"] = "فشل التحقق";
+
+ERRORS["-2003"] = "التحقق من خلال السيرفر فشل";
+ERRORS["-2004"] = "قيمة فارغة";
+ERRORS["-2005"] = "Response mode unknown";
+ERRORS["-2006"] = "AuthMethod not available";
+ERRORS["-2007"] = "حالة خاطئه";
+ERRORS["-2008"] = "لم يتم انشاء اتصال او انتهى";
+ERRORS["-2009"] = "مقدم الخدمه فشل تقديم طلب التحقق";
+ERRORS["-2010"] = "وسيلة التحقق هذي ممنوعة";//"Authentication method not allowed";
+ERRORS["-2011"] = "لا يوجد طلب";
+ERRORS["-2012"] = "خطأ في السيرفر الداخلي";
+
+ERRORS["-2013"] = "Bad signature on the authentication request";
+ERRORS["-2014"] = "خطأ داخلي في النظام";
+ERRORS["-2015"] = "خطأ داخلي في النظام";
+ERRORS["-2016"] = "Response Handler is null";
+ERRORS["-2017"] = "No Response Handler worker available";
+ERRORS["-2018"] = "No Authentication Repository Handler worker available";
+ERRORS["-2019"] = "No Authentication Session Handler worker available";
+ERRORS["-2020"] = "Validation of the session failed";
+ERRORS["-2021"] = "Processing SAML artifact resolve failed";
+ERRORS["-2022"] = "خطأ داخلي في النظام";
+ERRORS["-2023"] = "مقدم الخدمه غير معروف";
+ERRORS["-2024"] = "طريقة التحقق غير معرفه";
+ERRORS["-2025"] = "Bad SAML authentication request";
+ERRORS["-2026"] = "كلمة المرور العشوائيه خاطئه"; //"كلمة مرور عشوائيه خاطئه";
+
+ERRORS["-2027"] = "انتهى الاتصال";
+ERRORS["-2028"] = "اوراق الاعتماد فارغه";
+ERRORS["-2029"] = "Bad Signature";
+ERRORS["-2030"] = "معرف الشهادة غير موجود";
+ERRORS["-2031"] = "The SIG ALG parameter not found";
+ERRORS["-2032"] = "The signature parameter not found";
+ERRORS["-2033"] = "SAML Exception";
+ERRORS["-2034"] = "Building the response failed";
+ERRORS["-2035"] = "Bad OpenID request";
+ERRORS["-2036"] = "Token not specified";
+ERRORS["-2037"] = "فشل تحديث الاتصال";
+ERRORS["-2038"] = "حالة الاتصال خاطئه";
+ERRORS["-2039"] = "فشل انشاء اتصال";
+ERRORS["-2040"] = "No Action specified";
+ERRORS["-2041"] = "رقم بطاقة المستخدم غير مسجله";
+ERRORS["-2042"] = "رقم بطاقة المستخدم التلقائي غير مسجله";
+ERRORS["-2043"] = "رقم الجوال خاطئ";
+ERRORS["-2044"] = "رقم بطاقة الاحوال خاطئ";
+ERRORS["-2045"] = "اسم المستخدم خاطئ";
+ERRORS["-2046"] = "كلمة المرور خاطئه";
+ERRORS["-2047"] = "فشل تسجيل رقم المستخدم";
+ERRORS["-2048"] = "اسم المستخدم موجود بالفعل";
+ERRORS["-2049"] = "SSL is not enabled";
+ERRORS["-2050"] = "لم يتم ادخال رقم الجوال";
+ERRORS["-2051"] = "لم يتم ادخال رقم الجوال او رقم بطاقة الاحوال";
+ERRORS["-2052"] = "No Cache manager workers available";
+ERRORS["-2053"] = "لم يتم ادخال ID";
+ERRORS["-2054"] = "خطأ داخلي في النظام";
+// ERRORS["-2055"] = "خطأ داخلي في النظام";
+ERRORS["-2055"] = "The entered ID does not exist";
+ERRORS["-2056"] = "BAD Image";
+ERRORS["-2057"] = "المستخدم غير مسجل";
+ERRORS["-2058"] = "فشل تسجيل المستخدم تلقائيا";
+ERRORS["-2059"] = "Pin reset server not available";
+ERRORS["-2060"] = "Pin reset puk data is incorrect";
+ERRORS["-2061"] = "Pin reset compute server puk failed";
+ERRORS["-2062"] = "Pin reset national ID problem";
+ERRORS["-2063"] = "Pin reset mutual authentication not established";
+ERRORS["-2064"] = "Bad SAML MNI request";
+ERRORS["-2065"] = "Bad SAML NameID request";
+ERRORS["-2066"] = "User federation not match";
+ERRORS["-2067"] = "Bad SAML assertion id request";
+ERRORS["-2068"] = "Bad SAML authnquery request";
+ERRORS["-2069"] = "Bad SAML attribute query request";
+ERRORS["-2070"] = "The workstation not recognized";
+ERRORS["-2071"] = "اسم المستخدم او كلمة المرور غير صحيح";
+//ERRORS["-2072"] = "لايوجد مستخدم";
+ERRORS["-2072"] = "اسم المستخدم او كلمة المرور غير صحيح";
+ERRORS["-2073"] = "كلمة المرور انتهت";
+ERRORS["-2074"] = "لايوجد حساب";
+ERRORS["-2075"] = "الحساب منتهي";
+ERRORS["-2076"] = "الحساب مقفل";
+ERRORS["-2077"] = "Domain name is null";
+ERRORS["-2078"] = "فشل التحقق من خلال البصمه";
+ERRORS["-2079"] = "Domain is down";
+ERRORS["-2080"] = "The ID Card is not DEV or Prod card";
+
+ERRORS["-2081"] = "كلمة المرور انتهت";
+ERRORS["-2082"] = "خطأ اتصال";
+ERRORS["-2083"] = "خطأ اتصال";
+ERRORS["-2084"] = "خطأ - لا يسمح تخطي القيود";
+
+ERRORS["-2085"] = "يوجد مشكله بخدمة الرسائل";
+ERRORS["-2086"] = "غير مصرح";
+ERRORS["-2087"] = "فشل التحقق ,تعدد المستخدمين";
+ERRORS["-2088"] = "BAD MCD ID";
+ERRORS["-2089"] = "رقم البطاقة مقفل";
+ERRORS["-2090"] = "عفوا, لا يمكننا تنفيذ طلبك الان, يرجي المحاولة في وقت لاحق";
+ERRORS["-2091"] = "Federation failed, User different";
+
+// ========= Added for integrating validation service
+//ERRORS["-2092"] = "Validation Service not available";
+ERRORS["-2092"] = "نأسف ,لانستطيع القيام بأرسال الطلب في هذا الوقت. نرجو المحاولة لاحقا";
+ERRORS["-2093"] = "خطأ بالتحقق ,المستخدم غير موجود";
+ERRORS["-2094"] = "خطأ بالتحقق ,المستخدم متوفى";
+ERRORS["-2095"] = "خطأ بالتحقق ,الجنسية ملغاة";
+ERRORS["-2096"] = "خطأ بالتحقق ,المستخدم مطلوب";
+ERRORS["-2097"] = "خطأ بالتحقق , المستخدم خرج نهائيا";
+ERRORS["-2098"] = "خدمة الاشعار غير متاحة الان"
+ERRORS["-2099"] = "بيانات الاتصال غير موجودة"
+ERRORS["-2100"] = "رقم التحقق خاطئ";
+ERRORS["-2101"] = "خدمة البريد غير متاحة";
+ERRORS["-2102"] = "لم يتم ايجاد الايميل ,نرجو تحديث الايميل والمحاوله لاحقا";
+
+// ========= End - for integrating validation service
+
+ERRORS["-2103"] = "معلومات التسجيل غير متوفره";
+ERRORS["-2104"] = "حسابك غير نشط "; //Your account is not activated yet. Kindly activate your account.
+ERRORS["-2105"] = "غير مسجل";
+ERRORS["-2106"] = "المستخدم مطلوب";
+ERRORS["-2107"] = "المستخدم مرفوض";
+ERRORS["-2108"] = "المستخدم/الحاله غير صالح";
+ERRORS["-2109"] = "فشل تحديث عنوان البريد";
+//For BP's // Keep arabic updated
+ERRORS["-2110"] = "فشل تحديث رقم الجوال";
+ERRORS["-2111"] = "الجوال غير نشط";
+
+ERRORS["-2112"] = "كلمة المرور خاطئه";
+ERRORS["-2113"] = "كلمة المرور وتأكيد كلمة المرور لايوجد تطابق";
+ERRORS["-2114"] = "فشل تفعيل المستخدم"; 
+ERRORS["-2115"] = "رقم الجوال مستخدم";
+ERRORS["-2116"] = "هذا المستخدم مفعل";
+ERRORS["-2117"] = "رقم تحقق خاطئ";
+ERRORS["-2118"] = "رقم الجوال غير مسجل";
+ERRORS["-2119"] = "فشل التحقق";
+ERRORS["-2120"] = "اختيار خاطئ";
+ERRORS["-2121"] = "خطأ - عدد محاولات كبير";
+ERRORS["-2122"] = "الحروف المدخلة غير صحيحة. فضلا حاول مرة اخرى";
+ERRORS["-2123"] = "الدخول مرفوض ,بياناتك غير متطابقة";
+ERRORS["-2124"] = "المستخدم مسجل مسبقاً";
+ERRORS["-2125"] = "عفوا, لا يمكننا تنفيذ طلبك الان, يرجي المحاولة في وقت لاحق";
+ERRORS["-2126"] = "اسم الشركة غير صحيح"; 
+ERRORS["-2140"] = "أنتهت مهلة الرسالة المؤقتة, نرجوا النقر على إعادة ارسال الرسالة";
+
+
+ERRORS[E_AJAX_NOT_SUPPORTED] = "Ajax not supported";
+ERRORS[E_AJAX_SERVER_ERROR] = "Ajax server error";
+ERRORS[E_APPLET_NOT_INITIALIZED] = "Applet not intialized";
+ERRORS[E_APPLET_INTERNAL_ERROR] = "Applet internal error check your biometric sensor";
+ERRORS[E_APPLET_INTERRUPT_CAPTURE] = "Capture fingerprint stopped by the user";
+ERRORS[E_IDCARD_EXTENSION_NATIVE_INSTALLED_PARTIALLY] = "The IDCard Extension is not installed properly, please uninstall any previous version and download/install the latest version from this link <a href=\"/apps/IdcardExtension_v2.msi\">Latest IDCard Extension</a>";
+ERRORS[E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION] = "Invalid IDCard Extension request, callback not defined";
+
+// ========= End - for integrating IDCARD extension  -- Needs to be translated
+
+ERRORS["-63C5"] =  ".الرقم السري خاطئ؛ بقي 5 محاولات";
+ERRORS["-63C4"] =  ".الرقم السري خاطئ؛ بقي 4 محاولات";
+ERRORS["-63C3"] =  ".الرقم السري خاطئ؛ بقي 3 محاولات";
+ERRORS["-63C2"] =  ".الرقم السري خاطئ؛ بقي محاولتين";
+ERRORS["-63C1"] =  ".الرقم السري خاطئ؛ بقي محاولة واحدة";
+ERRORS["-63C0"] =  "الرقم السري للبطاقة مقفل";
+ERRORS["-6700"] =  "Wrong APDU data length";
+ERRORS["-6730"] =  "حدث خطأ أثناء قراءة البطاقة. الرجاء أعد إدخال البطاقة  ";
+ERRORS["-6732"] =  "Data gap error";
+ERRORS["-6736"] =  "No header selected";
+ERRORS["-6738"] =  "No session keys exchanged";
+ERRORS["-6740"] =  "ليست فارغة";
+ERRORS["-6742"] =  "Invalid key, i.e. key used is not appropriate";
+ERRORS["-6744"] =  "Invalid data, i.e. expected data syntax mismatch";
+ERRORS["-6746"] =  "Invalid challenge, i.e. card challenge does not match";
+ERRORS["-6748"] =  "Invalid hash, i.e. hash value does not match";
+ERRORS["-6750"] =  "Invalid CMD, i.e. CMD does not match";
+ERRORS["-6752"] =  "Invalid INS";
+ERRORS["-6754"] =  "Invalid Offset in the temporary buffer";
+ERRORS["-6760"] =  "Write corrupted flag is set – Data is corrupted";
+ERRORS["-6762"] =  "Write outdated flag is set – Data is outdated";
+ERRORS["-6764"] =  "TAG length not supported";
+ERRORS["-6766"] =  "TAG length invalid";
+ERRORS["-6768"] =  "TAG unexpected";
+ERRORS["-6770"] =  "DER encoding error";
+ERRORS["-6772"] =  "Wrong role ID";
+ERRORS["-6774"] =  "Card challenge not generated";
+ERRORS["-6776"] =  "Entity public key not set";
+ERRORS["-6778"] =  "تنسيق التاريخ غير مدعوم";
+ERRORS["-6780"] =  "الشهادة غير صالحة";
+ERRORS["-6784"] =  "Boundary is exceeded";
+ERRORS["-6900"] =  "Check case error";
+ERRORS["-6982"] =  "Credentials are not fulfilled";
+ERRORS["-6A83"] =  "Delegation error / File not found";
+ERRORS["-6A84"] =  "لا توجد مساحة كافية";
+ERRORS["-6A86"] =  "Incorrect P1 P2";
+ERRORS["-6A89"] =  "Duplicates not allowed";
+ERRORS["-6D00"] =  "البطاقة قيد الاستخدام, الرجاء الانتظار قليلا ثم حاول مرة اخرى";
+ERRORS["-6E00"] =  "خطأ داخلي في البطاقة";
+ERRORS["-9700"] =  "البطاقة مقفلة";
+
+ERRORS["80100001"] =  "Smartcard internal error";
+ERRORS["80100002"] =  "تم الغاء عملية البطاقة";
+ERRORS["80100003"] =  "Smartcard invalid handle";
+ERRORS["80100004"] =  "Smartcard invalid parameter";
+ERRORS["80100005"] =  "Smartcard invalid service target";
+ERRORS["80100006"] =  "مساحة ذاكرة البطاقة ليست كافية";
+ERRORS["80100007"] =  "انتهى وقت عملية التحقق من البطاقة";
+ERRORS["80100008"] =  "Smartcard output buffer too small";
+ERRORS["80100009"] =  "Smartcard unknown reader name";
+ERRORS["8010000A"] =  "انتهى وقت عملية التحقق من البطاقة";
+ERRORS["8010000B"] =  "توجد مشكلة في البطاقة، تم اقفال البطاقة من قبل تطبيق اخر";
+ERRORS["8010000C"] =  "بطاقة الهوية غير مدخلة في القارئ";
+ERRORS["8010000D"] =  "بطاقة مجهولة";
+ERRORS["8010000F"] =  "Smartcard uncompatible protocol";
+ERRORS["80100010"] =  "القارئ أو البطاقة غير جاهزة";
+ERRORS["80100011"] =  "Smartcard invalid value";
+ERRORS["80100012"] =  "تم الغاء عملية البطاقة";
+ERRORS["80100013"] =  "خطأ في الإتصال بقارئ البطاقة";
+ERRORS["80100014"] =  "خطأ في البطاقة";
+ERRORS["80100015"] =  "Smartcard invalid ATR";
+ERRORS["80100016"] =  "Smartcard no transaction";
+ERRORS["80100017"] =  "تم سحب قارئ البطاقة";
+ERRORS["80100019"] =  "Smartcard PCI buffer too small";
+ERRORS["8010001A"] =  "قارئ البطاقة غير مدعوم";
+ERRORS["8010001B"] =  "Smartcard readers with same name";
+ERRORS["8010001C"] =  "البطاقة غير مدعومة";
+ERRORS["8010001D"] =  "Smartcard resource manager (service) not running";
+ERRORS["8010001E"] =  "Smartcard resource manager (service) stopped";
+ERRORS["8010002E"] =  "الرجاء توصيل قارئ البطاقة";
+//ERRORS["-2148532270"] =  "لا يوجد أي ";
+ERRORS["80100065"] =  "البطاقة غير مدعومة";
+ERRORS["80100066"] =  "أعد إدخال البطاقة بطريقة صحيحة";
+ERRORS["80100067"] =  "لا يمكن قراءة البطاقة";
+ERRORS["80100068"] =  "تم اعادة ضبط البطاقة، انقر على زر التحديث";
+//ERRORS["80100069"] =  "تم سحب البطاقة من القارئ ";
+ERRORS["80100069"] =  "لم يتم ادخال البطاقة";
+
+
+
+ERRORS["-2500"] = " عذراً, غير مسموح لك بتسجيل الدخول, الرجاء التواصل معنا عن طريق : (nsso@nic.gov.sa)."; 
+ERRORS["-2501"] = "عذراً, غير مخول بتسجيل الدخول, الرجاء التواصل معنا عن طريق: (nsso@nic.gov.sa). " ;
+ERRORS["-2502"] = "عذراً، لايوجد لديك حساب ،الرجاء التسجيل <a href=\"https://www.moi.gov.sa/wps/portal/static/register/\" style=\"color:blue\"><u>هنا</u>.</a>";
+ERRORS["-2503"] = " عذراً, غير مسموح لك بتسجيل الدخول, الرجاء التواصل معنا عن طريق : (nsso@nic.gov.sa).";
+ERRORS["-2504"] = "عذراً, لا يمكننا تنفيذ طلبك الان, يرجي المحاولة في وقت لاحق";
+ERRORS["-2512"] = "عذراً ، غير مخول بتسجيل الدخول ، الرجاء التواصل معنا عن طريق: (nsso@nic.gov.sa). ";
+ERRORS["-2513"] = "عذراً, توجد مشكلة في رقم الهوية, الرجاء التواصل معنا عن طريق (nsso@nic.gov.sa).";
+
+ERRORS["-2547"] = "عذراً, غير مسموح لك بتسجيل الدخول من خارج المملكة العربية السعودية.";
+
+ERRORS["-2548"] = "حدث خطأ، المستخدم غير موجود";
+ERRORS["-2549"] = "حدث خطأ، لا يمكن التحقق من المستخدم";
+ERRORS["-2550"] = "حدث خطأ، لا يمكن التحقق من المستخدم";
+ERRORS["-2551"] = "المستخدم ليس مواطن سعودي";
+
+ERRORS["-2552"] = "بعض معلومات المستخدم مفقودة";
+ERRORS["-2553"] = "هوية المستخدم منهية الصلاحية"; 
+ERRORS["-2554"] = "تاريخ إصدار الهوية غير صحيح";
+ERRORS["-2555"] = "رقم نسخة الهوية غير صحيح";
+
+ERRORS["-2556"] = "لم يتم ايجاد رمز الدولة";
+ERRORS["-2557"] = "خطأ داخلي، الرجاء المحاولة لاحقاً";
+ERRORS["-2558"] = "مزود خدمة الإتصالات خطأ او غير معروف";
+ERRORS["-2559"] = "فشل التحقق ، الرجاء المحاولة لاحقاً";
+
+ERRORS["-2570"] = "Cannot process request to external IDP";
+ERRORS["-2571"] = "Invalid external IDP response received or processing failed";
+
+ERRORS["-2600"] = "عذراً ، تسجيل الدخول غير مسموح لهذه الخدمة";
+
+ERRORS["-2601"] = "خطأ خدمة معلومات الشركات";
+ERRORS["-2602"] = "الرجاء اختيار شركة على الاقل";
+ERRORS["-2603"] = "اسم الشركة غير متوفر";
+
+// For Nafath App (Hawyati) Service
+ERRORS["-2610"] = "حدث خطأ في الأتصال بتطبيق نفاذ، الرجاء المحاولة لاحقاً";
+
+ERRORS["-2631"] = "حدث خطأ في الأتصال، الرجاء المحاولة لاحقاً";
+
+
+// For OST Service
+ERRORS["-5000"] = "العملية غير صحيحة/عملية التوقيع";
+ERRORS["-5001"] = "لم يتم العثور على المستخدم";
+ERRORS["-5007"] = "هناك خطأ داخلي ، نرجو المعاودة لاحقا";
+ERRORS["-5010"] = "عملية الهوية غير صحيحة";
+ERRORS["-5020"] = "عملية التوقيع غير صحيحة";
+ERRORS["-5021"] = "العملية غير مكتملة";
+ERRORS["-5022"] = "العملية منتهية";
+ERRORS["-5050"] = "العملية معلقة";
+// For OST Service
+
+
+function getErrorMessage(code)
+{
+	if(code == null || code == undefined)
+		return "خطأ غير معروف";
+	
+	errorMessage = ERRORS[code];
+	
+	if(errorMessage == undefined && code.indexOf("-") == -1 ){
+		errorMessage = ERRORS["-"+code];
+	}
+
+	if(errorMessage == undefined){
+		errorMessage = "خطأ غير معروف";
+		return "[" + code + "] " + errorMessage;
+	}
+	
+	return errorMessage;
+}
+
+function checkErrors(signatureOrErrorCode)
+{
+	if(signatureOrErrorCode == null || signatureOrErrorCode == undefined)
+		return true; 
+		
+	return (signatureOrErrorCode.match("^-")=="-");
+}

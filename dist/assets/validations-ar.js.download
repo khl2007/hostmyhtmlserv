@@ -1,0 +1,225 @@
+﻿
+$(function() {
+		
+		$.validator.addMethod(
+			"regex", 
+			function(value, element, regexp){
+				var re = new RegExp(regexp);
+				return this.optional(element) || re.test(value);
+			}, 
+			"تأكد من المدخلات"
+		);		
+		
+		var forms = $("form");		
+		$.each(forms, function(index,formObj){
+			$(formObj).validate({
+				ignore:[],
+				errorPlacement: function(error, element){
+					console.log("errorpalcent " + error + " " + $(element).attr('id'));
+					if($(element).attr('id') == "OTP"){
+						
+						if(!(document.getElementById("otp_form").style.display == 'none')){
+							error.error.insertAfter(document.getElementById('userOTP'));
+						}
+						else 
+						if(!(document.getElementById("totp_form").style.display == 'none')){
+							error.error.insertAfter(document.getElementById('TOTP'));
+						}
+						else{
+							error.insertAfter(element);
+						}
+						
+					}
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					USER: {
+						required: true,
+						regex: /^[A-Za-z0-9_]+([a-zA-Z0-9]*(_|-|.)[a-zA-Z0-9]*)*[a-zA-Z0-9_-]+$/
+					},
+					PWD: {
+						required: true
+					},
+					NAT_ID: {
+						required: true,
+						minlength: 10,
+						maxlength: 10,
+						digits: { digits: true }
+					},
+					sf_auth_method : {
+						required: true
+					},
+					OTP : {
+						required: true,
+						minlength: 4,
+						maxlength: 4,
+						digits: { digits: true }
+					},
+					TOTP : {
+						required: true,
+						minlength: 4,
+						maxlength: 4,
+						digits: { digits: true }
+					},
+					vcCode : {
+						required: true,
+						minlength: 6,
+						maxlength: 6						
+					},
+					MOBILE : {
+						required: true,
+						minlength: 10,
+						maxlength: 10,
+						regex: /05(\d){8}/
+					},
+					inCaptchaChars : {
+						required: true,
+						minlength: 6,
+						maxlength: 6,
+						digits: { digits: true }
+					}
+				},
+				messages: {
+					USER: {
+						required: " ادخل اسم المستخدم",
+						regex : "اسم المستخدم خطأ"
+					},
+					PWD: {
+						required: "ادخل كلمة المرور"						
+					},
+					NAT_ID : {
+						required: "ادخل رقم بطاقة الأحوال",
+						minlength: "تأكد من أنها عشر خانات",
+						maxlength: "تأكد من أهنا عشر خانات",
+						digits : "ارقام فقط"
+					},
+					sf_auth_method : {
+						required: "عملية التحقق إلزامية"
+					},
+					OTP : {
+						required: "نرجو ادخال كلمة المرور لمرة واحده فقط",
+						minlength: "خاطئه",
+						maxlength: "خاطئة",
+						digits : "ارقام فقط"
+					},
+					vcCode : {
+						required: "ادخل الارقام الموجوده برسالة",
+						minlength: "خاطئ",
+						maxlength: "خاطئ"						
+					},
+					MOBILE : {
+						required: "نرجو ادخال رقم جوالك",
+						minlength: "أقل من عشر ارقام",
+						maxlength: "أكثر من عشر ارقام"	,
+						regex : "رقم خاطئ"
+					},
+					inCaptchaChars : {
+						required: "الرجاء إدخال الرمز المرئي",
+						minlength: "الرجاء إدخال الرمز المرئي",
+						maxlength: "الرجاء إدخال الرمز المرئي",
+						digits : "الرجاء إدخال الرمز المرئي"
+					}
+				},
+				submitHandler: authenticate
+			});
+		});
+		
+	});
+	
+
+	function ValidateUsername(evt)
+	{		
+		var theEvent = evt || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		//var regex = /^[^*|\":<>[\]{}'\\()';@%#!&$]+$/; // false cases
+		var regex = /^[A-Za-z0-9._-]+$/;
+		if(theEvent.keyCode == 13){
+			return true;
+		}
+		
+		// keycode 8 - backspace, 9 - Tab
+		// 36-Home, 35-End, 37-Left arrow, 39-Right arrow.
+		if(theEvent.keyCode == 8 || theEvent.keyCode == 9 || theEvent.keyCode == 37 || theEvent.keyCode == 39 || theEvent.keyCode == 35 || theEvent.keyCode == 36){
+			return true;
+		}
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+	}
+	
+	function Validate_NAT_ID(evet)
+	{		
+		var theEvent = evet || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		var regex = /[0-9]|\./;
+		if(theEvent.keyCode == 13){
+			return true;
+		}
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+	}
+	
+	
+	/*
+	var ValidateUPOTPFPFormAndSubmit = function(){
+			
+			var sfAuthMethod = document.getElementById("sf_auth_method").value;
+			var username = document.getElementById("j_username").value;
+			var pwd = document.getElementById("j_password").value;
+			var status = true;
+			if(sfAuthMethod === null || sfAuthMethod === ""){
+				//document.getElementById("upoptfpt_form_message").innerHTML = "SF Auth method is mandatory";
+				document.getElementById("upoptfpt_error_message").style.display = "block";				
+				status = false;
+			} else {
+				document.getElementById("upoptfpt_error_message").style.display = "none";
+			}
+			if(username === null || username === ""){
+				document.getElementById("j_username_error_message").style.display = "block";
+				status = false;
+			} else {
+				document.getElementById("j_username_error_message").style.display = "none";
+			}
+			
+			if(pwd === null || pwd === ""){
+				document.getElementById("j_password_error_message").style.display = "block";
+				status = false;
+			} else {
+				document.getElementById("j_password_error_message").style.display = "none";
+			}
+			
+			if(status){
+				if(sfAuthMethod === "1"){
+					document.getElementById("Action").value = "OTP_CC";
+				} else if(sfAuthMethod === "2"){
+					document.getElementById("Action").value = "BIO_UP_FPI";
+				} else {
+					return false;
+				}
+				document.forms[0].submit();
+			} else {
+				return status;
+			}
+		}
+		function clearErrors( ele ){
+			if(ele && ele !== undefined){
+				if(ele.id==='j_username'){
+					document.getElementById('j_username_error_message').style.display = "none";
+				} else if(ele.id==='j_password'){
+					document.getElementById('j_password_error_message').style.display = "none";
+				} else if(ele.id==='sf_auth_method'){
+					document.getElementById('upoptfpt_error_message').style.display = "none";
+				}
+			}			
+		}
+	
+	*/

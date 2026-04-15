@@ -1,0 +1,529 @@
+2025-12-13T23:29:02.000000000Z [inf]  Starting Container
+2025-12-13T23:29:02.674604142Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:02.674613711Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:02.674615378Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:02.674621379Z [inf]  
+2025-12-13T23:29:02.674622264Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:02.674626456Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:02.674630266Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:02.674632639Z [inf]  > node index.js
+2025-12-13T23:29:02.674637414Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:02.674637663Z [inf]  
+2025-12-13T23:29:02.674642626Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:02.674645316Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:02.674647941Z [err]          throw e;
+2025-12-13T23:29:02.674653518Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:02.674653579Z [err]          ^
+2025-12-13T23:29:02.674658972Z [err]  
+2025-12-13T23:29:02.674661701Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:02.674664382Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:02.674669433Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:02.674669842Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:02.674676069Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:02.674677362Z [err]  }
+2025-12-13T23:29:02.674688944Z [err]  
+2025-12-13T23:29:02.674695463Z [err]  Node.js v22.21.1
+2025-12-13T23:29:03.035649594Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:03.054688423Z [inf]  
+2025-12-13T23:29:03.054693257Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:03.054696999Z [inf]  > node index.js
+2025-12-13T23:29:03.054700744Z [inf]  
+2025-12-13T23:29:03.196069157Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:03.196078446Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:03.196084362Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:03.196089102Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:03.196093855Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:03.196099316Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:03.196100235Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:03.196105247Z [err]          throw e;
+2025-12-13T23:29:03.196107714Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:03.196110451Z [err]          ^
+2025-12-13T23:29:03.196112671Z [err]  }
+2025-12-13T23:29:03.196120738Z [err]  
+2025-12-13T23:29:03.196123521Z [err]  
+2025-12-13T23:29:03.196125953Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:03.196130401Z [err]  Node.js v22.21.1
+2025-12-13T23:29:03.196131844Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:03.196136131Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:03.196139919Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:03.196143554Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:03.675460974Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:03.675467120Z [inf]  
+2025-12-13T23:29:03.675471790Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:03.675476903Z [inf]  > node index.js
+2025-12-13T23:29:03.675485035Z [inf]  
+2025-12-13T23:29:03.782398731Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:03.782406547Z [err]          throw e;
+2025-12-13T23:29:03.782413445Z [err]          ^
+2025-12-13T23:29:03.782420105Z [err]  
+2025-12-13T23:29:03.782424720Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:03.782430048Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:03.782434395Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:03.782438896Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:03.782443022Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:03.782448584Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:03.782452610Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:03.782456896Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:03.782461320Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:03.782465886Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:03.782470165Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:03.782474471Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:03.782478751Z [err]  }
+2025-12-13T23:29:03.782485051Z [err]  
+2025-12-13T23:29:03.782491873Z [err]  Node.js v22.21.1
+2025-12-13T23:29:04.571565344Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:04.571573737Z [inf]  
+2025-12-13T23:29:04.571581183Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:04.571586188Z [inf]  > node index.js
+2025-12-13T23:29:04.571591077Z [inf]  
+2025-12-13T23:29:04.680411854Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:04.680422330Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:04.680429764Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:04.680436240Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:04.680444286Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:04.680448514Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:04.680452303Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:04.680458328Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:04.680458335Z [err]          throw e;
+2025-12-13T23:29:04.680464532Z [err]  }
+2025-12-13T23:29:04.680467853Z [err]          ^
+2025-12-13T23:29:04.680470679Z [err]  
+2025-12-13T23:29:04.680476959Z [err]  Node.js v22.21.1
+2025-12-13T23:29:04.680477737Z [err]  
+2025-12-13T23:29:04.680485367Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:04.680492864Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:04.680500341Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:04.680507784Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:04.680514828Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:05.387331481Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:05.406775951Z [inf]  
+2025-12-13T23:29:05.406782323Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:05.406787161Z [inf]  > node index.js
+2025-12-13T23:29:05.406791509Z [inf]  
+2025-12-13T23:29:05.582947405Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:05.582957260Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:05.582963749Z [err]  }
+2025-12-13T23:29:05.582970708Z [err]  
+2025-12-13T23:29:05.582974704Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:05.582978725Z [err]  Node.js v22.21.1
+2025-12-13T23:29:05.582981258Z [err]          throw e;
+2025-12-13T23:29:05.582985732Z [err]          ^
+2025-12-13T23:29:05.582989708Z [err]  
+2025-12-13T23:29:05.582993944Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:05.582997842Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:05.583001785Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:05.583005990Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:05.583009910Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:05.583013589Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:05.583017591Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:05.583024032Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:05.583028496Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:05.583032767Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:06.298101775Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:06.318097964Z [inf]  
+2025-12-13T23:29:06.318108129Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:06.318116475Z [inf]  > node index.js
+2025-12-13T23:29:06.318125975Z [inf]  
+2025-12-13T23:29:06.462783752Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:06.462784820Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:06.462789651Z [err]          throw e;
+2025-12-13T23:29:06.462794100Z [err]          ^
+2025-12-13T23:29:06.462799122Z [err]  
+2025-12-13T23:29:06.462800122Z [err]  }
+2025-12-13T23:29:06.462804498Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:06.462809402Z [err]  
+2025-12-13T23:29:06.462810435Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:06.462815857Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:06.462816628Z [err]  Node.js v22.21.1
+2025-12-13T23:29:06.462820465Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:06.462824398Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:06.462828042Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:06.462831874Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:06.462836162Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:06.462845688Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:06.462850102Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:06.462853857Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:06.902440464Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:06.921819294Z [inf]  
+2025-12-13T23:29:06.921826066Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:06.921832420Z [inf]  > node index.js
+2025-12-13T23:29:06.921839497Z [inf]  
+2025-12-13T23:29:07.044605581Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:07.044612227Z [err]  }
+2025-12-13T23:29:07.044614734Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:07.044619088Z [err]  
+2025-12-13T23:29:07.044623754Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:07.044624372Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:07.044625516Z [err]  Node.js v22.21.1
+2025-12-13T23:29:07.044630056Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:07.044635004Z [err]          throw e;
+2025-12-13T23:29:07.044635914Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:07.044640411Z [err]          ^
+2025-12-13T23:29:07.044645704Z [err]  
+2025-12-13T23:29:07.044650657Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:07.044655184Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:07.044659669Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:07.044664686Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:07.044669641Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:07.044674719Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:07.044678822Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:07.778360689Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:07.798552691Z [inf]  
+2025-12-13T23:29:07.798558386Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:07.798563051Z [inf]  > node index.js
+2025-12-13T23:29:07.798567714Z [inf]  
+2025-12-13T23:29:07.920617004Z [err]  }
+2025-12-13T23:29:07.920627879Z [err]  
+2025-12-13T23:29:07.920632422Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:07.920635657Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:07.920638596Z [err]  Node.js v22.21.1
+2025-12-13T23:29:07.920640222Z [err]          throw e;
+2025-12-13T23:29:07.920645676Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:07.920647349Z [err]          ^
+2025-12-13T23:29:07.920654460Z [err]  
+2025-12-13T23:29:07.920655497Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:07.920661728Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:07.920664462Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:07.920668113Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:07.920674230Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:07.920675974Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:07.920682804Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:07.920683236Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:07.920689210Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:07.920705459Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:08.775599221Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:08.775603587Z [inf]  
+2025-12-13T23:29:08.775608037Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:08.775612104Z [inf]  > node index.js
+2025-12-13T23:29:08.775615979Z [inf]  
+2025-12-13T23:29:08.795481425Z [err]  
+2025-12-13T23:29:08.795485498Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:08.795492888Z [err]          throw e;
+2025-12-13T23:29:08.795494869Z [err]  Node.js v22.21.1
+2025-12-13T23:29:08.795498486Z [err]          ^
+2025-12-13T23:29:08.795502813Z [err]  
+2025-12-13T23:29:08.795506860Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:08.795511211Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:08.795515680Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:08.795519352Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:08.795523241Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:08.795527093Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:08.795532126Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:08.795536647Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:08.795540497Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:08.795544606Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:08.795548373Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:08.795552599Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:08.795556914Z [err]  }
+2025-12-13T23:29:09.541867732Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:09.562317990Z [inf]  
+2025-12-13T23:29:09.562322573Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:09.562326635Z [inf]  > node index.js
+2025-12-13T23:29:09.562330298Z [inf]  
+2025-12-13T23:29:09.693064879Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:09.693074072Z [err]          throw e;
+2025-12-13T23:29:09.693079119Z [err]          ^
+2025-12-13T23:29:09.693084011Z [err]  
+2025-12-13T23:29:09.693088413Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:09.693093048Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:09.693097796Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:09.693102916Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:09.693107002Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:09.693112113Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:09.693116312Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:09.693121593Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:09.693125814Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:09.693130343Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:09.693134786Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:29:09.693140320Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:09.693144572Z [err]  }
+2025-12-13T23:29:09.693148850Z [err]  
+2025-12-13T23:29:09.693153853Z [err]  Node.js v22.21.1
+2025-12-13T23:29:10.446458942Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:29:10.450219315Z [inf]  
+2025-12-13T23:29:10.450225781Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:29:10.450229895Z [inf]  > node index.js
+2025-12-13T23:29:10.450234168Z [inf]  
+2025-12-13T23:29:10.575864482Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:29:10.575870820Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:29:10.575874069Z [err]  }
+2025-12-13T23:29:10.575881365Z [err]          throw e;
+2025-12-13T23:29:10.575881794Z [err]  
+2025-12-13T23:29:10.575887728Z [err]  Node.js v22.21.1
+2025-12-13T23:29:10.575892838Z [err]          ^
+2025-12-13T23:29:10.575899728Z [err]  
+2025-12-13T23:29:10.575906484Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:29:10.575913260Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:29:10.575919743Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:29:10.575926273Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:29:10.575930262Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:29:10.575934086Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:29:10.575937722Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:29:10.575941500Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:29:10.575945160Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:29:10.575948753Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:29:10.575952399Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.779299725Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:10.779309481Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:10.779317420Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:10.779325596Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:10.779326150Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:10.779333355Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.779339095Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:10.779341807Z [inf]  
+2025-12-13T23:31:10.779345459Z [err]  }
+2025-12-13T23:31:10.779351000Z [err]  
+2025-12-13T23:31:10.779354859Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:10.779356279Z [err]  Node.js v22.21.1
+2025-12-13T23:31:10.779361752Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:10.779365635Z [inf]  > node index.js
+2025-12-13T23:31:10.779374611Z [inf]  
+2025-12-13T23:31:10.779384964Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:10.779396690Z [err]          throw e;
+2025-12-13T23:31:10.779407199Z [err]          ^
+2025-12-13T23:31:10.779416697Z [err]  
+2025-12-13T23:31:10.779426120Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:10.779435435Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:10.779442900Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:10.779452135Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:10.779460334Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:10.779467987Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:10.779989666Z [inf]  
+2025-12-13T23:31:10.779997732Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:10.780003612Z [inf]  > node index.js
+2025-12-13T23:31:10.780008986Z [inf]  
+2025-12-13T23:31:10.780013738Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:10.780019445Z [err]          throw e;
+2025-12-13T23:31:10.780023762Z [err]          ^
+2025-12-13T23:31:10.780029152Z [err]  
+2025-12-13T23:31:10.780033478Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:10.780041282Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:10.780045837Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:10.780050742Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:10.780055283Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:10.780059364Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:10.780063150Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:10.780067879Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:10.780071523Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:10.780075907Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:10.780080413Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.780084281Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:10.780088453Z [err]  }
+2025-12-13T23:31:10.780092675Z [err]  
+2025-12-13T23:31:10.780096441Z [err]  Node.js v22.21.1
+2025-12-13T23:31:10.780100038Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:10.780108346Z [inf]  
+2025-12-13T23:31:10.780525362Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:10.780533842Z [inf]  > node index.js
+2025-12-13T23:31:10.780540708Z [inf]  
+2025-12-13T23:31:10.780547765Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:10.780554862Z [err]          throw e;
+2025-12-13T23:31:10.780562904Z [err]          ^
+2025-12-13T23:31:10.780567765Z [err]  
+2025-12-13T23:31:10.780571525Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:10.780576490Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:10.780582863Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:10.780590128Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:10.780596597Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:10.780603166Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:10.780610147Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:10.780616490Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:10.780623511Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:10.780630050Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:10.780637502Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.780644044Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:10.780650517Z [err]  }
+2025-12-13T23:31:10.780655697Z [err]  
+2025-12-13T23:31:10.780659677Z [err]  Node.js v22.21.1
+2025-12-13T23:31:10.780664499Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:10.780670580Z [inf]  
+2025-12-13T23:31:10.780676480Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:10.781096079Z [inf]  > node index.js
+2025-12-13T23:31:10.781104927Z [inf]  
+2025-12-13T23:31:10.781114095Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:10.781121551Z [err]          throw e;
+2025-12-13T23:31:10.781128110Z [err]          ^
+2025-12-13T23:31:10.781135115Z [err]  
+2025-12-13T23:31:10.781142109Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:10.781148998Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:10.781155386Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:10.781162279Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:10.781168919Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:10.781175649Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:10.781182166Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:10.781188968Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:10.781196251Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:10.781202216Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:10.781208642Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.781214876Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:10.781223227Z [err]  }
+2025-12-13T23:31:10.781230089Z [err]  
+2025-12-13T23:31:10.781236559Z [err]  Node.js v22.21.1
+2025-12-13T23:31:10.781243120Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:10.781250045Z [inf]  
+2025-12-13T23:31:10.781256664Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:10.781262679Z [inf]  > node index.js
+2025-12-13T23:31:10.781268799Z [inf]  
+2025-12-13T23:31:10.804749277Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:10.804760662Z [err]          throw e;
+2025-12-13T23:31:10.804769557Z [err]          ^
+2025-12-13T23:31:10.804778604Z [err]  
+2025-12-13T23:31:10.804788685Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:10.804797753Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:10.804806491Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:10.804814686Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:10.804822459Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:10.804830304Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:10.804837995Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:10.804846465Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:10.804854400Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:10.804862293Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:10.804870797Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:10.804877965Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:10.804882887Z [err]  }
+2025-12-13T23:31:10.804890094Z [err]  
+2025-12-13T23:31:10.804896384Z [err]  Node.js v22.21.1
+2025-12-13T23:31:11.295373710Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:11.333371238Z [inf]  
+2025-12-13T23:31:11.333377616Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:11.333382030Z [inf]  > node index.js
+2025-12-13T23:31:11.333385944Z [inf]  
+2025-12-13T23:31:11.477868170Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:11.477877272Z [err]  }
+2025-12-13T23:31:11.477878668Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:11.477884583Z [err]  
+2025-12-13T23:31:11.477887175Z [err]          throw e;
+2025-12-13T23:31:11.477890421Z [err]  Node.js v22.21.1
+2025-12-13T23:31:11.477895155Z [err]          ^
+2025-12-13T23:31:11.477901452Z [err]  
+2025-12-13T23:31:11.477908393Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:11.477917329Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:11.477923358Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:11.477929357Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:11.477935729Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:11.477942061Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:11.477948192Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:11.477954013Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:11.477960447Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:11.477965439Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:11.477969111Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:12.177734510Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:12.198467682Z [inf]  
+2025-12-13T23:31:12.198476757Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:12.198483807Z [inf]  > node index.js
+2025-12-13T23:31:12.198494703Z [inf]  
+2025-12-13T23:31:12.328765300Z [err]  
+2025-12-13T23:31:12.328769539Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:12.328773800Z [err]  Node.js v22.21.1
+2025-12-13T23:31:12.328774753Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:12.328781606Z [err]          throw e;
+2025-12-13T23:31:12.328787010Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:12.328791751Z [err]          ^
+2025-12-13T23:31:12.328796693Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:12.328802192Z [err]  
+2025-12-13T23:31:12.328805361Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:12.328811585Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:12.328814401Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:12.328821255Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:12.328821743Z [err]  }
+2025-12-13T23:31:12.328830244Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:12.328836856Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:12.328843499Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:12.328855666Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:12.328859481Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:13.049459932Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:13.068628242Z [inf]  
+2025-12-13T23:31:13.068635032Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:13.068639512Z [inf]  > node index.js
+2025-12-13T23:31:13.068645351Z [inf]  
+2025-12-13T23:31:13.206372082Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:13.206386135Z [err]          throw e;
+2025-12-13T23:31:13.206394541Z [err]          ^
+2025-12-13T23:31:13.206404480Z [err]  
+2025-12-13T23:31:13.206412300Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:13.206423901Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:13.206429313Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:13.206434508Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:13.206440223Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:13.206445381Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:13.206449766Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:13.206455293Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:13.206459786Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:13.206463959Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:13.206470540Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:13.206474762Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:13.206479483Z [err]  }
+2025-12-13T23:31:13.206484073Z [err]  
+2025-12-13T23:31:13.206488281Z [err]  Node.js v22.21.1
+2025-12-13T23:31:13.992583127Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:13.992588090Z [inf]  
+2025-12-13T23:31:13.992592584Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:13.992596975Z [inf]  > node index.js
+2025-12-13T23:31:13.992600673Z [inf]  
+2025-12-13T23:31:14.059961231Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:14.059969911Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:14.059970578Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:14.059975666Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:14.059978636Z [err]          throw e;
+2025-12-13T23:31:14.059982851Z [err]  }
+2025-12-13T23:31:14.059986936Z [err]          ^
+2025-12-13T23:31:14.059989244Z [err]  
+2025-12-13T23:31:14.059993166Z [err]  
+2025-12-13T23:31:14.059995630Z [err]  Node.js v22.21.1
+2025-12-13T23:31:14.059999143Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:14.060003621Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:14.060008186Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:14.060012929Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:14.060016747Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:14.060020973Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:14.060024683Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:14.060028755Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:14.060032668Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:14.805762094Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:14.805768137Z [inf]  
+2025-12-13T23:31:14.805772605Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:14.805776744Z [inf]  > node index.js
+2025-12-13T23:31:14.805780831Z [inf]  
+2025-12-13T23:31:14.943994777Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:14.944007183Z [err]          throw e;
+2025-12-13T23:31:14.944013721Z [err]          ^
+2025-12-13T23:31:14.944020281Z [err]  
+2025-12-13T23:31:14.944026155Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:14.944033474Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:14.944039761Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:14.944045865Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:14.944051757Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:14.944058245Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:14.944064585Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:14.944070270Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:14.944077332Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:14.944083598Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:14.944089406Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:14.944094653Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:14.944100008Z [err]  }
+2025-12-13T23:31:14.944105706Z [err]  
+2025-12-13T23:31:14.944111178Z [err]  Node.js v22.21.1
+2025-12-13T23:31:15.691507269Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-12-13T23:31:15.691511603Z [inf]  
+2025-12-13T23:31:15.691516604Z [inf]  > salamathml-server@1.0.0 start
+2025-12-13T23:31:15.691521067Z [inf]  > node index.js
+2025-12-13T23:31:15.691524891Z [inf]  
+2025-12-13T23:31:15.828139671Z [err]  /app/node_modules/bindings/bindings.js:121
+2025-12-13T23:31:15.828147272Z [err]          throw e;
+2025-12-13T23:31:15.828154479Z [err]          ^
+2025-12-13T23:31:15.828162854Z [err]  
+2025-12-13T23:31:15.828174941Z [err]  Error: /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node: invalid ELF header
+2025-12-13T23:31:15.828182220Z [err]      at Object..node (node:internal/modules/cjs/loader:1865:18)
+2025-12-13T23:31:15.828189139Z [err]      at Module.load (node:internal/modules/cjs/loader:1441:32)
+2025-12-13T23:31:15.828197071Z [err]      at Function._load (node:internal/modules/cjs/loader:1263:12)
+2025-12-13T23:31:15.828204106Z [err]      at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+2025-12-13T23:31:15.828210345Z [err]      at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+2025-12-13T23:31:15.828216781Z [err]      at Module.require (node:internal/modules/cjs/loader:1463:12)
+2025-12-13T23:31:15.828222484Z [err]      at require (node:internal/modules/helpers:147:16)
+2025-12-13T23:31:15.828234214Z [err]      at bindings (/app/node_modules/bindings/bindings.js:112:48)
+2025-12-13T23:31:15.828241192Z [err]      at new Database (/app/node_modules/better-sqlite3/lib/database.js:48:64)
+2025-12-13T23:31:15.828247823Z [err]      at Object.<anonymous> (/app/database.js:12:12) {
+2025-12-13T23:31:15.828255022Z [err]    code: 'ERR_DLOPEN_FAILED'
+2025-12-13T23:31:15.828261695Z [err]  }
+2025-12-13T23:31:15.828269921Z [err]  
+2025-12-13T23:31:15.828275373Z [err]  Node.js v22.21.1

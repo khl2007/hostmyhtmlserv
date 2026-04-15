@@ -1,0 +1,1 @@
+function CreateIAMEvent(b,a){var c=$.map(a.commandArgs,function(a,b){return a});return new CustomEvent(b,{detail:{command:a.command,commandArgs:c}})}function SendIAMEvent(b,a){var c=CreateIAMEvent(b,a);document.dispatchEvent(c)};

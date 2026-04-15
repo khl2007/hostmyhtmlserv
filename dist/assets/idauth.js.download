@@ -1,0 +1,970 @@
+	var IDCARD_AUTH_APPLET = null;
+	var IDCARD_SIGNING_APPLET_ID = "";
+	var attempts=0;
+	// ====================== chrome extension ================
+	var port;
+	var nativeExtensionId = "gbkmlihffekjcimmcnchldokejhfjjhg";
+	document.addEventListener("message",onMessage);
+	
+	function connect(){
+		port=chrome.runtime.connect(nativeExtensionId);
+		port.onMessage.addListener(onMessage);
+	}
+	
+	/*
+	 * read CSN And NationalId from chrome extension
+	 */
+	function readCSNAndNationalId(){
+	//	if(port==null){
+			connect();
+	//	}
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		port.postMessage({"command": "ReadCSNAndNationalId", "commandArgs":[]});
+	}
+	
+	/*
+	 * Create signature and export sign certificate along with CSN And NationalId from chrome extension
+	 */
+	function SignDataAndExportCertAndCSN(data, pin){
+	//	if(port==null){
+			connect();
+	//	}
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		port.postMessage({"command": "SignDataAndExportCertAndCSN", "commandArgs":[data,pin,"0"]});
+	}
+	
+	function signChallenge(Challenge, Password)
+	{		
+	//	if(port==null){
+			connect();
+	//	}
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		port.postMessage({"command": "SignChallenge", "commandArgs":[Challenge,Password,"0"]});
+		
+		//alert(getErrorMessage(response));		
+		
+	}
+	
+	function onMessage(message){
+		var responseString="";
+		if(navigator.userAgent.toLowerCase().indexOf('firefox')>-1){
+			var message = JSON.parse(message.detail);
+		}
+		
+		if(message.operation =="ReadCSNAndNationalId"){
+			handleCSNAndNationalIDResponse(message.csnAndNationalId);
+		}else if(message.operation =="SignChallenge"){
+			handleSignedChallenge(message.signedChallenge, message.certificate);
+		}else if(message.operation =="ReadCertificate"){
+			responseString += "Card certificate: "+message.certificate;
+		}else if(message.operation =="error"){
+			HandleError(message.errorCode, getErrorMessage(message.errorCode));
+		}else if(message.operation =="SignDataAndExportCertAndCSN"){
+			handleSignDataAndExportCertAndCSN(message.signedResp);
+		}else{
+			HandleError("-1", getErrorMessage("-1"));
+		}
+		  
+	}
+	
+	
+	// ====================== end chrome extension ================
+	
+	//============================== firefox extension ================
+	function readCSNAndNationalIdFirefox(){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var readCSNAndNationalIdEvent = new Event('readCSNAndNationalIdEvent');
+		document.dispatchEvent(readCSNAndNationalIdEvent);
+
+	}
+
+
+	function signChallengeFirefox(Challenge, Password){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var signChallengeEvent = new CustomEvent('signChallengeEvent', { 'detail' : {'hxChallenge': Challenge , 'pin':Password, 'format':0 }});
+		document.dispatchEvent(signChallengeEvent);
+	}
+	
+	function SignDataAndExportCertAndCSNFirefox(){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var SignDataAndExportCertAndCSNEvent = new Event('SignDataAndExportCertAndCSNEvent');
+		document.dispatchEvent(SignDataAndExportCertAndCSNEvent);
+
+	}
+	//=================================== end firefox extension =======================
+	
+	
+	// ============================================ IE extension ========================================
+	function readCSNAndNationalIdIE(){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var csnAndNationalId = readCSNAndNationalidActiveX();
+		onMessage(JSON.parse(csnAndNationalId));
+
+	}
+
+
+	function signChallengeIE(Challenge, Password){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var challenge = signChallengeActiveX(Challenge, Password, 0);
+		onMessage(JSON.parse(challenge));
+	}
+	
+	function SignDataAndExportCertAndCSNIE(data, pin){
+		document.getElementById("ERROR_LABEL").innerHTML="";
+		var signDataAndExportCertAndCSNActiveXVar = SignDataAndExportCertAndCSNActiveX(data, pin, 0);
+		onMessage(JSON.parse(signDataAndExportCertAndCSNActiveXVar));
+	}
+	
+	// ================================================== End IE extension ==================================
+	
+	function isAppletActive(applet)
+	{
+	var isActive ;
+	
+	try{
+			/*if(navigator.appName == "Microsoft Internet Explorer")
+				isActive = applet.isActive();
+			else
+				isActive = applet.isActive; */
+				
+			isActive = applet.isIAMComponentActive();
+			
+			
+		}catch(e)
+		{
+			isActive=false;
+		}
+		
+		return isActive;
+	}
+	
+	function Initilize()
+	{
+		var isActive=false;
+		if(IDCARD_AUTH_APPLET == null)
+		{
+			if(navigator.appName == "Microsoft Internet Explorer")
+				IDCARD_AUTH_APPLET = document.getElementById(IDCARD_SIGNING_APPLET_ID); 
+			else{ // Firefox, chrome, ...
+				//IDCARD_AUTH_APPLET = document.embeds[1]; 
+				if(document.embeds.length > 1){
+					IDCARD_AUTH_APPLET = document.embeds[1];
+				} else{
+					IDCARD_AUTH_APPLET = document.embeds[0];
+				}				
+			}				
+		}
+		
+		isActive = isAppletActive(IDCARD_AUTH_APPLET);
+		
+		if(!isActive){
+			IDCARD_AUTH_APPLET = document.getElementById(IDCARD_SIGNING_APPLET_ID); 
+		}
+		isActive = isAppletActive(IDCARD_AUTH_APPLET);
+		
+		if(!isActive){
+			if(document.embeds.length > 1){
+				IDCARD_AUTH_APPLET = document.embeds[1];
+			} else{
+				IDCARD_AUTH_APPLET = document.embeds[0];
+			}
+		}
+		isActive = isAppletActive(IDCARD_AUTH_APPLET);
+		
+		if(IDCARD_AUTH_APPLET == null || !isActive)
+		{   
+			HandleError(E_APPLET_NOT_INITIALIZED, "Applet not intialized");
+			$("#spinner").hide();
+		}
+		
+	}
+	
+	
+	function IDCard_RawSignChallenge(Challenge, Password)
+	{		
+		Initilize();
+		//alert(IDCARD_AUTH_APPLET);
+		
+		
+			response = IDCARD_AUTH_APPLET.RawSignChallenge(Challenge, Password, 0); // 1 means base64, 0 hex
+			if(response == "-9" && attempts<8){
+				attempts++;
+				setTimeout(IDCard_RawSignChallenge(Challenge, Password),2000);				
+			}
+			else{
+				attempts=0;
+				if(checkErrors(response))
+				{		    
+					HandleError(response, getErrorMessage(response));
+					return "-1";
+				}
+				else
+				{		    
+					HandleAuthSuccess(response, IDCARD_AUTH_APPLET.GetAuthCertificate(0));
+				}
+			}
+		
+		//alert(getErrorMessage(response));		
+		
+	}
+	
+	function IDCard_SignChallenge(Challenge, Password)
+	{		
+		Initilize();
+		//alert(IDCARD_AUTH_APPLET);
+		response = IDCARD_AUTH_APPLET.SignChallenge(Challenge, Password, 1); // 1 means base64, 0 hex
+		//alert(getErrorMessage(response));
+		
+		if(checkErrors(response))
+		{		    
+			HandleError(response, getErrorMessage(response));
+			return "";
+		}
+		else
+		{		    
+			HandleAuthSuccess(response);
+		}
+	}
+//////////////////////
+	
+	
+	function PromptForPassword()
+	{
+		var pwd=prompt("Please enter SMS number:","");
+		if (pwd!=null && pwd!="")
+		{
+			//alert(pwd);
+			return pwd;
+		}
+		return null;
+		
+	}
+	
+	function IDP_IDCard_Authenticate(PIN, HXChallenge)
+	{
+		Initilize();
+		redirectUrlOrErrorCode = IDCARD_AUTH_APPLET.IDP_IDCard_Authenticate(PIN, HXChallenge);
+				
+		if(checkErrors(redirectUrlOrErrorCode))
+		{
+			HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+			return "";
+		}
+		else
+		{
+		//alert("SUCCCCCCESSS");
+			HandleAuthSuccess(redirectUrlOrErrorCode);
+			//location.href = redirectUrlOrErrorCode;
+			//return redirectUrlOrErrorCode;
+		}
+	}
+	
+		
+	function ID2_Authenticate(ServerUrl, PIN, IssuerUrl)
+	{
+		Initilize();
+		redirectUrlOrErrorCode = IDCARD_AUTH_APPLET.ID2_Authenticate(ServerUrl, PIN, IssuerUrl);
+		//alert(getErrorMessage(redirectUrlOrErrorCode));
+		
+		if(checkErrors(redirectUrlOrErrorCode))
+		{
+			HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+			return "";
+		}
+		else
+		{
+			HandleAuthSuccess(redirectUrlOrErrorCode);
+			//location.href = redirectUrlOrErrorCode;
+			//return redirectUrlOrErrorCode;
+		}
+	}
+
+	function SRP_Authenticate(ServerUrl, Username, Password, IssuerUrl)
+	{
+		Initilize();
+
+		redirectUrlOrErrorCode = IDCARD_AUTH_APPLET.SRP_Authenticate(ServerUrl, Username, Password, IssuerUrl);
+		
+		if(checkErrors(redirectUrlOrErrorCode))
+		{
+			HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+			return "";
+		}
+		else
+		{
+			HandleAuthSuccess(redirectUrlOrErrorCode);
+		}
+	}
+	
+	function UP_Authenticate(ServerUrl, Username, Password, IssuerUrl)
+	{
+		Initilize();
+		//alert(IDCARD_AUTH_APPLET);
+		redirectUrlOrErrorCode = IDCARD_AUTH_APPLET.UP_Authenticate(ServerUrl, Username, Password, IssuerUrl);
+		//alert(getErrorMessage(signatureOrErrorCode));
+		
+		if(checkErrors(redirectUrlOrErrorCode))
+		{
+			HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+			return "";
+		}
+		else
+		{
+			HandleAuthSuccess(redirectUrlOrErrorCode);
+		}
+	}
+	
+	function UPP_Authenticate(ServerUrl, Username, Password, IssuerUrl)
+	{
+		Initilize();
+		//alert(IDCARD_AUTH_APPLET);
+		response = IDCARD_AUTH_APPLET.UPP_Authenticate(ServerUrl, Username, Password, IssuerUrl);
+		//alert(getErrorMessage(signatureOrErrorCode));
+		
+		if(checkErrors(response))
+		{
+			HandleError(response, getErrorMessage(response));
+			return "";
+		}
+		else
+		{
+			HandleAuthSuccess(response);
+		}
+	}
+	
+	function GetXMLHttpRequestObject()
+	{
+
+		if (window.XMLHttpRequest) 
+		{ // mozilla, safari, etc		
+			return new XMLHttpRequest();
+		}
+		else 
+		if(window.ActiveXObject) 
+		{ // if IE
+			try 
+			{ 
+				return new ActiveXObject("Msxml2.XMLHTTP"); 
+			}
+			catch(e) 
+			{
+				try 
+				{ 
+					return new ActiveXObject("Microsoft.XMLHTTP"); 
+				}
+				catch(e)
+				{
+					//alert("Ajax not supported");
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	function HandleOneTimePassword(ServerUrl)
+	{
+		//alert(ServerUrl);
+		
+		var http = GetXMLHttpRequestObject();
+		
+		if(http == null)
+			HandleError(E_AJAX_NOT_SUPPORTED, getErrorMessage(E_AJAX_NOT_SUPPORTED));
+		else
+		{
+			
+			var RND = PromptForPassword();
+			var params = "Action=COMPLETE_UP_ONETIME_PASSWORD_AUTHENTICATION&ONE_TIME_PASSWORD="+RND;
+						
+			http.open("POST", ServerUrl, true);
+	
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			http.setRequestHeader("Content-length", params.length);
+			http.setRequestHeader("Connection", "close");
+			
+			http.onreadystatechange = function() {//Call a function when the state changes.
+			//alert(http.status);
+				if(http.readyState == 4)
+				{
+					if(http.status == 200) 
+					{
+						//alert("Response="+http.responseText);
+						redirectUrlOrErrorCode = http.responseText;
+						if(checkErrors(redirectUrlOrErrorCode))
+						{
+							HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+						}
+						else
+						{
+							HandleAuthSuccess(redirectUrlOrErrorCode);						
+						}
+					}
+					/*else
+					{
+						HandleError(E_AJAX_SERVER_ERROR, getErrorMessage(E_AJAX_SERVER_ERROR));
+					}*/
+				}
+			}
+			
+			http.send(params);
+		}
+			
+		
+	}
+	
+	
+	var errorOccured = 0;
+	
+	function UPP_AuthenticateAjax(ServerUrl, Username, Password, IssuerUrl)
+	{
+		errorOccured = 0;
+		var http = GetXMLHttpRequestObject();
+		
+		if(http == null)
+			HandleError(E_AJAX_NOT_SUPPORTED, getErrorMessage(E_AJAX_NOT_SUPPORTED));
+		else
+		{
+			
+			
+			var params = "Action=UP_ONETIME_PASSWORD_AUTHENTICATION&USERNAME="+Username+"&PASSWORD="+Password+"&ISSUER_URL="+IssuerUrl;
+			//alert(ServerUrl);
+			http.open("POST", ServerUrl, true);
+	
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			http.setRequestHeader("Content-length", params.length);
+			http.setRequestHeader("Connection", "close");
+			
+			http.onreadystatechange = function() {//Call a function when the state changes.
+			//alert(http.status);
+				if(http.readyState == 4)
+				{
+					//alert(http.status);
+					if(http.status == 200) 
+					{
+						//alert("Response="+http.responseText);
+						redirectUrlOrErrorCode = http.responseText;
+						if(checkErrors(redirectUrlOrErrorCode))
+						{
+							HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+							errorOccured = 1;
+							//return "";
+						}
+						else
+						{
+							errorOccured = 0;
+							//HandleAuthSuccess(redirectUrlOrErrorCode);
+							
+							//var RND = PromptForPassword();
+							//params = "Action=COMPLETE_UP_ONETIME_PASSWORD_AUTHENTICATION&ONE_TIME_PASSWORD="+RND;
+							
+							HandleOneTimePassword(ServerUrl);
+							
+						}
+					}
+					/*else
+					{
+						errorOccured = 1;
+						HandleError(E_AJAX_SERVER_ERROR, getErrorMessage(E_AJAX_SERVER_ERROR));
+					}*/
+				}
+			}
+			
+			http.send(params);
+			
+			//alert(errorOccured);
+		}
+	}
+	
+	function UP_AuthenticateAjax(ServerUrl, Username, Password, IssuerUrl)
+	{
+		
+		var http = GetXMLHttpRequestObject();
+		
+		if(http == null)
+			HandleError(E_AJAX_NOT_SUPPORTED, getErrorMessage(E_AJAX_NOT_SUPPORTED));
+		else
+		{
+			
+			var url = ServerUrl;
+			
+			var params = "Action=USERNAME_PASSWORD_AUTHENTICATION&USERNAME="+Username+"&PASSWORD="+Password+"&ISSUER_URL="+IssuerUrl;
+			//alert(url);
+			http.open("POST", url, true);
+	
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			http.setRequestHeader("Content-length", params.length);
+			http.setRequestHeader("Connection", "close");
+			
+			http.onreadystatechange = function() {//Call a function when the state changes.
+			//alert(http.status);
+				if(http.readyState == 4 && http.status == 200) {
+					//alert("Response="+http.responseText);
+					redirectUrlOrErrorCode = http.responseText;
+					if(checkErrors(redirectUrlOrErrorCode))
+					{
+						HandleError(redirectUrlOrErrorCode, getErrorMessage(redirectUrlOrErrorCode));
+						return "";
+					}
+					else
+					{
+						HandleAuthSuccess(redirectUrlOrErrorCode);
+					}
+				}
+			}
+			
+			http.send(params);
+			
+		}
+	}
+	
+	
+	
+	
+	function CreateCookie(name, value, days, domain) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires ="; expires="+date.toGMTString();
+		}
+		else var expires = "";
+		document.cookie = name+"="+value + "; Domain="+domain + expires+"; path=/";
+		
+		//alert("createcookie>>>"+document.cookie);
+	}
+	
+	function DeleteServiceSessionCookie()
+	{
+		document.cookie = "JSESSIONID=1;expires=Thu, 01-Jan-1970 00:00:01 GMT;;";
+	}
+	
+	function ReadCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+	
+	/*
+	 * For reading MCD ID from ID card
+	 * Added by IAM Team
+	 */
+	function IDCard_ReadMCDID(){
+		Initilize();
+		var resp = IDCARD_AUTH_APPLET.ReadCSN();
+
+		if(checkErrors(resp))
+		{		    
+			HandleError(resp, getErrorMessage(resp));
+			return "";
+		}
+		else
+		{		    
+			HandleMCDIDReadSuccess(resp);
+		}
+	}
+	
+	/*
+	 * For reading CSN And NAtional ID from ID card
+	 * Added by IAM Team
+	 */
+	function IDCard_ReadCSNAndNatId(){
+		Initilize();
+		var resp = IDCARD_AUTH_APPLET.ReadCSNAndNationalId();
+
+		if(checkErrors(resp))
+		{		    
+			HandleError(resp, getErrorMessage(resp));
+			return "";
+		}
+		else
+		{		    
+			HandleCSNAndNationalIDReadSuccess(resp);
+		}
+	}
+	
+		/*
+	 * For reading CSN And NAtional ID from ID card and disconnect card with specified mode
+	 * Added by IAM Team
+	 */
+	function IDCard_ReadCSNAndNatIdDisconnectMode(reset){
+		Initilize();
+		
+		var resp = IDCARD_AUTH_APPLET.ReadCSNAndNationalId(reset);
+
+		if(checkErrors(resp))
+		{		    
+			HandleError(resp, getErrorMessage(resp));
+			return "";
+		}
+		else
+		{		    
+			HandleCSNAndNationalIDReadSuccess(resp);
+		}
+	}
+	
+	/*
+	 * For reading CSN from ID card
+	 * Added by IAM Team
+	 */
+	function IDCard_ReadCSN(){
+		Initilize();
+		var resp = IDCARD_AUTH_APPLET.ReadCSN();
+
+		if(checkErrors(resp))
+		{		    
+			HandleError(resp, getErrorMessage(resp));
+			return "";
+		}
+		else
+		{		    
+			HandleCSNReadSuccess(resp);
+		}
+	}
+	
+	/*
+	 * For reading National Id from ID card
+	 * Added by IAM Team
+	 */
+	function IDCard_ReadNationalId(){
+		Initilize();
+		var resp = IDCARD_AUTH_APPLET.ReadNationalId();
+
+		if(checkErrors(resp))
+		{		    
+			HandleError(resp, getErrorMessage(resp));
+			return "";
+		}
+		else
+		{		    
+			HandleNationalIdReadSuccess(resp);
+		}
+	}
+	
+	
+	/* For validate the pin, allows only numeric
+	
+	*/
+	function Validate(evt)
+	{
+		//alert('hi'+evt);
+		var theEvent = evt || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		var regex = /[0-9]|\./;
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+	}
+	
+	function ValidatePIN(evt)
+	{
+		//alert('hi'+evt);
+		var theEvent = evt || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		var regex = /[0-9]|\./;
+		// keycode 8 - backspace, 9 - Tab
+		// 36-Home, 35-End, 37-Left arrow, 39-Right arrow.
+		if(theEvent.keyCode == 8 || theEvent.keyCode == 9 || theEvent.keyCode == 37 || theEvent.keyCode == 39 || theEvent.keyCode == 35 || theEvent.keyCode == 36){
+			return true;
+		}
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+		if(theEvent.keyCode == 13) RawSignChallenge();
+	}
+	
+	
+	/* function Validate_NAT_ID(evet)
+	{
+		//alert('hi'+evet);
+		var theEvent = evet || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		var regex = /[0-9]|\./;
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+		
+		if(theEvent.keyCode == 13) SubmitBIOFPInitForm();
+	} */ // Moved this method to validations.js
+	
+	/*
+	
+	
+	function FocusOnInput(){
+	    document.getElementById("OTP").focus();
+	  }
+	  
+	  
+	  
+	  function creatlink(){
+	  var link = "http://google.com";
+	  var element = document.createElement("a");
+	  element.setAttribute("href",link);
+	  element.innerHTML="your text";
+	  document.body.appendChild(element);
+	  //document.write("a href='"+link+"'>" +"</a>");
+	  
+	  }
+	  */
+
+	function Validate_OTP(evet1, targForm)
+	{		
+		var theEvent = evet1 || window.event;
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+		var regex = /[0-9]|\./;
+		
+		// keycode 8 - backspace, 9 - Tab
+		// 36-Home, 35-End, 37-Left arrow, 39-Right arrow.
+		if(theEvent.keyCode == 8 || theEvent.keyCode == 9 || theEvent.keyCode == 37 || theEvent.keyCode == 39 || theEvent.keyCode == 35 || theEvent.keyCode == 36){
+			return true;
+		}
+		if(!regex.test(key))
+		{
+			theEvent.returnValue = false;
+			if(theEvent.preventDefault) theEvent.preventDefault();
+		}
+		
+		//if(theEvent.keyCode == 13) document.forms[0].submit();
+		//for - page gets refreshed on hitting Enter on OTP page
+		if(theEvent.keyCode == 13){
+			try{
+				if(totp_tab == null){
+					authenticate(targForm);
+				}else{
+					if(totp_tab.className.includes("tab-pane active")){
+						submitOTPform('totp');
+					}else{
+						submitOTPform('otp');
+					}
+				}	
+			} catch(e) {
+				console.error("error:"+e);
+				authenticate(targForm);
+			}
+		}
+	}
+	
+	function validateForm() {
+	  var text = document.getElementById("OTP").value;
+	  if(text == null || text ==""){
+	  
+	  //alert("please enter the temp password");
+	  return false;
+	  }
+	  if(!(text>>0) >0 )
+	  {
+	  alert("password can't contain any letter");
+	  return false;
+	  }
+	  return true;
+	  }
+	  
+	  function deployJavaDocWriteWrapper(jq, func){
+		var oldwrite = document.write, content = '';
+		document.write = function(text){
+			content += text;
+		}
+		func();
+		document.write = oldwrite;
+		jq.html(content);
+		//jq.hide();
+	  }
+	  //deployJavaDocWriteWrapper($(\"#deployJavaPlugin1\"), function(){deployJavaApplet();});
+	  
+	  function deployJavaApplet() {
+		var attributes = {
+			id: "idcard_offline_signing_applet",
+			code: "org.nic.client.applets.IDCardOfflineSigningApplet.class",
+			archive: "/nicidp/idcard_offline_signing_applet_signed.jar",
+			width : "0",
+			height : "0"
+		};
+		var parameters = {scriptable : true, separate_jvm : true, type: "application/x-java-applet;version=1.3"};
+		var minJreVersion="1.6";
+		deployJava.runApplet(attributes, parameters, minJreVersion);
+	  }
+	  function checkJRE(){
+		if(deployJava.versionCheck(JRE_MIN_VERSION) == false) { 
+		showJREError();
+		return false;
+	}
+	return true;
+}
+
+
+
+// *************************  IDCard Extension V2  **************************** //
+
+var externalSuccessCallbackFct;
+var externalFailCallbackFct;
+var idcardCommand;
+var IDCARD_CURRENT_VERSION = "2.0";
+var SignDataTypeEnum = {"DIGEST":"digest", "TEXT":"text", "BIN":"bin"};
+Object.freeze(SignDataTypeEnum);
+
+//window.addEventListener("message", (event) => { // This does not work in IE
+window.addEventListener("message", function(event) {
+	if (event.source == window &&
+		  event.data.direction &&
+		  event.data.direction == "from-content-script-idcard") {
+		
+		console.log("resp:"+event.data.message);
+		
+		var response;
+		if("string" === typeof(event.data.message))
+		{
+			response = $.parseJSON(event.data.message);
+		}
+		else
+			response = event.data.message;
+			
+		//alert("resp msg:"+response);
+		
+		if(idcardCommand === response.operation) {
+			if(externalSuccessCallbackFct != undefined)
+				externalSuccessCallbackFct(response);
+		} else if("error" === response.operation) {
+			if(externalFailCallbackFct != undefined)
+				externalFailCallbackFct(response.errorCode, getErrorMessage(response.errorCode));
+		} else {
+			if(externalFailCallbackFct != undefined)
+				externalFailCallbackFct("Invalid Operation or Unknown Error", "Invalid Operation or Unknown Error");
+		}
+			
+	}	
+});
+
+function IdCardSignData(hashData, pin, dataType, successCallbackFct, failCallbackFct)
+{
+	
+	if(successCallbackFct == undefined || typeof successCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+	
+	if(failCallbackFct == undefined || typeof failCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+
+	externalSuccessCallbackFct = successCallbackFct;
+	externalFailCallbackFct = failCallbackFct;
+	idcardCommand = "SignDataAndExportCertAndCSN";
+	
+	if(pin == null || pin == undefined || pin.length < 4)
+	{
+		HandleError("-1");
+		return;
+	}
+	
+	if(hashData == null || hashData == undefined || hashData.length == 0)
+	{
+		HandleError("-2");
+		return;
+	}
+
+	SendIAMEvent('IdCardCommandEvent', {"command": idcardCommand, "commandArgs":[hashData, pin, "0"]});
+}
+
+function getIdCardVersion(successCallbackFct, failCallbackFct) {
+	if(successCallbackFct == undefined || typeof successCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+	
+	if(failCallbackFct == undefined || typeof failCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+
+	externalSuccessCallbackFct = successCallbackFct;
+	externalFailCallbackFct = failCallbackFct;
+	idcardCommand = "Version";
+	//alert("Sending cmd event:"+idcardCommand);
+	SendIAMEvent('IdCardCommandEvent', {"command": idcardCommand, "commandArgs":[]});
+}
+
+function IdCardReadCSNAndNatId(successCallbackFct, failCallbackFct)
+{
+	if(successCallbackFct == undefined || typeof successCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+	
+	if(failCallbackFct == undefined || typeof failCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+
+	externalSuccessCallbackFct = successCallbackFct;
+	externalFailCallbackFct = failCallbackFct;
+	idcardCommand = "ReadCSNAndNationalId";
+	
+	SendIAMEvent('IdCardCommandEvent', {"command": idcardCommand, "commandArgs":[]});
+}
+
+function IdCardSignChallenge(Challenge, pin, successCallbackFct, failCallbackFct)
+{
+	
+	if(successCallbackFct == undefined || typeof successCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+	
+	if(failCallbackFct == undefined || typeof failCallbackFct != "function")
+	{
+		HandleError(E_IDCARD_EXTENSION_UNDEFINED_CALLBACK_FUNCTION);
+		return;
+	}
+	
+	if(Challenge == null || Challenge == undefined || Challenge.length == 0)
+	{
+		HandleError("-2");
+		return;
+	}
+	
+	if(pin == null || pin == undefined || pin.length < 4)
+	{
+		HandleError("-1");
+		return;
+	}
+	
+	externalSuccessCallbackFct = successCallbackFct;
+	externalFailCallbackFct = failCallbackFct;
+	idcardCommand = "SignChallenge";
+	
+	SendIAMEvent('IdCardCommandEvent', {"command": idcardCommand, "commandArgs":[Challenge, pin, "0"]});
+}
+
+function HandleError(code)
+{
+	message = getErrorMessage(code);
+
+	if(externalFailCallbackFct != undefined)
+		externalFailCallbackFct(code, message);
+	else
+		alert("IAM IDCard Error: "+message + " ("+code+").");
+}

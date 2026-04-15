@@ -1,0 +1,12 @@
+{
+  "name": "salamathml-web-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Standalone HTML/bootstrap server for the SPA",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

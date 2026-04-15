@@ -1,0 +1,204 @@
+﻿window.history.forward();
+
+var message="Due to security reasons,right click is not allowed !";
+
+
+function disableclick(){
+	alert(message);
+	return false;
+}
+
+function clickNS(e){
+	if(document.layers||document.getElementById&&!document.all){
+		if(e.which==2||e.which==3){
+			alert(message);
+			return false;
+		}
+	}
+}
+
+if(document.layers){
+	document.captureEvents(Event.MOUSEDOWN);
+	document.onmousedown=clickNS;
+}
+
+else if(document.all&&!document.getElementById){
+	document.onmousedown=disableclick;
+}
+
+document.oncontextmenu=new Function("alert(message); return false");
+
+
+function setCookie(cname,cvalue,exdays) { 
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;alert('hi');
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkCookie() {
+    var user=getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+       user = prompt("Please enter your name:","");
+       if (user != "" && user != null) {
+           setCookie("username", user, 30);
+       }
+    }
+}
+
+function SetSyncToken(tokenValue){
+	document.getElementById("TOKEN_SYNC").value = tokenValue;
+}
+
+function SetMobile(mobile){
+	document.getElementById("mobilenumber").innerHTML = mobile;
+}
+
+function SetEmail(email){
+	document.getElementById("email").innerHTML = email;
+}
+
+function refreshCaptcha() { 
+	document.getElementById("captchaimg").src="/authservice/simplecaptcha#"+ new Date().getTime();
+	document.getElementsByName("inCaptchaChars")[0].value="";
+}
+
+function refreshIdpinitCaptcha() { 
+	document.getElementById("captchaimg").src="/idpinit/simplecaptcha#"+ new Date().getTime();
+	document.getElementsByName("inCaptchaChars")[0].value="";
+}
+
+function focusInput(id){	
+	$("#"+id).focus().focus();
+}
+
+$(document).ready(checkverionOfIE);
+
+function checkverionOfIE (){
+	var isIE = false || !!document.documentMode;
+	if (isIE == true){
+		var ver = document.documentMode;
+		if ( ver < 9.0 ){
+			showBrowserErrorsOverlay();
+		}
+	}
+}
+
+$(document).ready(checkverionOfIE);
+function showBrowserErrorsOverlay() {
+	var widt;
+	var heig;
+	if (document.body && document.body.offsetWidth) {
+		widt = document.body.offsetWidth;
+		heig = document.body.offsetHeight;
+	}
+	if (document.compatMode === 'CSS1Compat' && document.documentElement && document.documentElement.offsetWidth) {
+		widt = document.documentElement.offsetWidth;
+		heig = document.documentElement.offsetHeight;
+	}
+	if (window.innerWidth && window.innerHeight) {
+		widt = window.innerWidth;
+		heig = window.innerHeight;
+	}
+
+	$('#overlayPage').animate({
+		opacity : 1
+	}, 250, function() {
+	});
+	$('#browserErrorsOverlay').css('width', widt);
+	$('#browserErrorsOverlay').css('height', heig);
+	$('#browserErrorsOverlay').css('z-index', 10000000);
+	$('#browserErrorsOverlay').css('display', 'block');
+
+	var thispos = ($('#browserErrorsOverlayContent').width());
+	var xpos = (widt - thispos) / 2;
+	$('#browserErrorsOverlayContent').css('left', xpos);
+
+}
+
+$(window).scroll(function () {
+    // fixed menu
+    if ($(this).scrollTop() > 165) {
+        $('.header').addClass('fixed');
+    } else {
+        $('.header').removeClass('fixed');
+    }
+    if ($(this).scrollTop() > 295) {
+        $('.header').addClass('fixed_sm');
+    } else {
+        $('.header').removeClass('fixed_sm');
+    }
+});
+$(document).ready(function () {
+    /* // top menu
+    $('#menu').slicknav({
+        label: '',
+        duplicate: true
+    });
+
+
+    // main slider
+    $('.m_slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        vertical: true,
+        arrows: false,
+        dots: true,
+        mobileFirst: true,
+        customPaging: function (slider, i) { return '<span data-role="none" title="' + (i + 1) + '"> </span>'; }
+    });
+
+    // tooltip
+    $('#tsrv_tabs').mouseenter(function () {
+        if ($(this).find("ul.ul_sub").attr('style') == undefined || $(this).find("ul.ul_sub").css('display') == "none") {
+            $(this).find("ul.ul_sub").slideDown(1000);
+            $("html, body").animate({ scrollTop: 1000 }, 600);
+        }
+    });
+    $('#tsrv_tabs').mouseleave(function () {
+        $("ul.ul_sub").slideUp(1000);
+    });
+
+    // tooltip
+
+    $(function () {
+        $('a.fixedTip').aToolTip({
+            // no need to change/override  
+            closeTipBtn: 'aToolTipCloseBtn',
+            toolTipId: 'aToolTip',
+            // ok to override  
+            fixed: true,                   // Set true to activate fixed position  
+            clickIt: false,                 // set to true for click activated tooltip  
+            inSpeed: 800,                   // Speed tooltip fades in  
+            outSpeed: 100,                  // Speed tooltip fades out  
+            tipContent: '',                 // Pass in content or it will use objects 'title' attribute  
+            toolTipClass: 'defaultTheme',   // Set class name for custom theme/styles  
+            xOffset: -120,                     // x position  
+            yOffset: -70,                     // y position  
+            onShow: null,                   // callback function that fires after atooltip has shown  
+            onHide: null                    // callback function that fires after atooltip has faded out      
+        });
+
+    }); */
+});
+
+
+
+
