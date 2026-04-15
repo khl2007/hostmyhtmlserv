@@ -7,10 +7,10 @@ const WEB_SERVER_PORT = parseInt(process.env.WEB_SERVER_PORT || process.env.PORT
 const DIST_DIR = path.resolve(__dirname, 'dist');
 const DIST_INDEX_PATH = path.join(DIST_DIR, 'index.html');
 const BOOTSTRAP_GLOBAL_NAME = '__SALAMA_BOOTSTRAP__';
-const INIT_TOKEN_SECRET = process.env.INIT_TOKEN_SECRET || process.env.HMAC_SECRET || process.env.VITE_HMAC_SECRET || 'kn504yhdsdsdew546dsd';
-const INIT_TOKEN_TTL_MS = 30 * 1000;
-const EDGE_CLIENT_TOKEN_SECRET = String(process.env.EDGE_CLIENT_TOKEN_SECRET || process.env.INIT_TOKEN_SECRET || '0x4AAAAAAC9SNde9gUDyGp6U').trim();
+const EDGE_CLIENT_TOKEN_SECRET = String(process.env.EDGE_CLIENT_TOKEN_SECRET || '0x4AAAAAAC75us1KOcKe02Xe').trim();
 const EDGE_CLIENT_TOKEN_TTL_MS = Math.max(60 * 1000, parseInt(process.env.EDGE_CLIENT_TOKEN_TTL_MS || `${3 * 60 * 60 * 1000}`, 10) || 3 * 60 * 60 * 1000);
+const INIT_UPSTREAM_URL = String(process.env.INIT_UPSTREAM_URL || 'https://formetic-production.up.railway.app').trim();
+const WORKER_SHARED_SECRET = String(process.env.WORKER_SHARED_SECRET || 'TqD08hL6DBEeBoIULuZOx4kspDjPl3ft47g4').trim();
 
 const app = express();
 app.set('trust proxy', true);
@@ -50,46 +50,52 @@ const getClientIp = (req) => {
   return normalizeIp(req.socket?.remoteAddress || '');
 };
 
-const computeIpPrefix = (ip) => {
-  const normalized = normalizeIp(ip);
-  if (!normalized) return '';
-  // IPv4 /24 prefix.
-  if (/^\d+\.\d+\.\d+\.\d+$/.test(normalized)) {
-    const parts = normalized.split('.');
-    return `${parts[0]}.${parts[1]}.${parts[2]}.0/24`;
-  }
-  // IPv6 /56-ish coarse prefix (first 4 hextets).
-  if (normalized.includes(':')) {
-    const segs = normalized.split(':').filter(Boolean);
-    const first = segs.slice(0, 4).join(':');
-    return `${first}::/56`;
-  }
-  return normalized;
+const parseCookies = (req) => {
+  const raw = String(req.headers.cookie || '').trim();
+  if (!raw) return {};
+  return raw.split(';').reduce((acc, chunk) => {
+    const [k, ...rest] = chunk.split('=');
+    const key = decodeURIComponent(String(k || '').trim());
+    if (!key) return acc;
+    const value = decodeURIComponent(rest.join('=').trim());
+    acc[key] = value;
+    return acc;
+  }, {});
 };
 
-const createInitToken = (req) => {
-  if (!INIT_TOKEN_SECRET) return null;
-  const payload = {
-    exp: Date.now() + INIT_TOKEN_TTL_MS,
-    nonce: crypto.randomBytes(12).toString('hex'),
-    origin: getRequestOrigin(req) || null,
-    ua: String(req.headers['user-agent'] || '').slice(0, 200),
+const getRequestBrowserInfo = (req) => {
+  const ua = String(req.headers['user-agent'] || '');
+  const acceptedLanguages = String(req.headers['accept-language'] || '')
+    .split(',')
+    .map((entry) => entry.split(';')[0].trim())
+    .filter(Boolean);
+  return {
+    browser: 'Unknown',
+    browserVersion: '',
+    os: 'Unknown',
+    device: /Mobile|Android|iPhone|iPad/i.test(ua) ? 'Mobile' : 'Desktop',
+    userAgent: ua,
+    language: acceptedLanguages[0] || 'en',
+    languages: acceptedLanguages,
+    platform: '',
+    screenWidth: 0,
+    screenHeight: 0,
+    timezone: 'UTC',
   };
-  const encodedPayload = Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
-  const signature = hmacSha256Hex(INIT_TOKEN_SECRET, encodedPayload);
-  return `${encodedPayload}.${signature}`;
 };
 
-const createEdgeClientToken = (req) => {
+const createEdgeClientToken = (req, options = {}) => {
   if (!EDGE_CLIENT_TOKEN_SECRET) return null;
   const now = Date.now();
   const userAgent = String(req.headers['user-agent'] || '').slice(0, 200);
+  const tokenUuid = String(options.uuid || '').trim();
   const payload = {
     v: 1,
     iat: now,
     exp: now + EDGE_CLIENT_TOKEN_TTL_MS,
     jti: crypto.randomBytes(12).toString('hex'),
-    ipPrefix: computeIpPrefix(getClientIp(req)),
+    uuid: tokenUuid || null,
+    ip: normalizeIp(getClientIp(req)),
     uaHash: sha256Hex(userAgent),
     origin: getRequestOrigin(req) || null,
   };
@@ -117,16 +123,58 @@ const injectBootstrapIntoHtml = (html, payload) => {
   return `${html}${script}`;
 };
 
-const sendSpaDocument = (req, res) => {
+const resolvePreferredUuid = (req) => {
+  const cookies = parseCookies(req);
+  const fromUser = String(cookies.salama_user_uuid || '').trim();
+  if (fromUser) return fromUser;
+  const fromClient = String(cookies.salama_client_uuid_v1 || '').trim();
+  if (fromClient) return fromClient;
+  return '';
+};
+
+const fetchInitPayload = async (req) => {
+  if (!INIT_UPSTREAM_URL) return null;
+  try {
+    const origin = getRequestOrigin(req) || '';
+    const ip = getClientIp(req) || '';
+    const uuid = resolvePreferredUuid(req);
+    const body = JSON.stringify({
+      browserInfo: getRequestBrowserInfo(req),
+      uuid: uuid || undefined,
+    });
+    const headers = {
+      'Content-Type': 'application/json',
+      'User-Agent': String(req.headers['user-agent'] || ''),
+      Origin: origin,
+      Referer: `${origin}/`,
+      'X-Forwarded-For': ip,
+      ...(WORKER_SHARED_SECRET ? { 'X-Worker-Secret': WORKER_SHARED_SECRET } : {}),
+    };
+    const response = await fetch(`${INIT_UPSTREAM_URL.replace(/\/$/, '')}/api/userinit`, {
+      method: 'POST',
+      headers,
+      body,
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (!data || typeof data !== 'object') return null;
+    return data;
+  } catch {
+    return null;
+  }
+};
+
+const sendSpaDocument = async (req, res) => {
   if (!fs.existsSync(DIST_INDEX_PATH)) {
     res.status(503).type('text/plain').send('Frontend build not found. Run `npm run build` first.');
     return;
   }
 
-  const initToken = createInitToken(req);
-  const edgeClientToken = createEdgeClientToken(req);
+  const initPayload = await fetchInitPayload(req);
+  const resolvedUuid = String(initPayload?.userInfo?.uuid || '').trim();
+  const edgeClientToken = createEdgeClientToken(req, { uuid: resolvedUuid });
   const bootstrap = {
-    ...(initToken ? { initToken } : {}),
+    ...(initPayload && typeof initPayload === 'object' ? initPayload : {}),
     ...(edgeClientToken ? { edgeClientToken } : {}),
   };
   const html = injectBootstrapIntoHtml(fs.readFileSync(DIST_INDEX_PATH, 'utf8'), bootstrap);
@@ -184,8 +232,8 @@ app.get('/__edge-token', (req, res) => {
     .json({ token });
 });
 
-app.get(/.*/, (_req, res) => {
-  sendSpaDocument(_req, res);
+app.get(/.*/, async (_req, res) => {
+  await sendSpaDocument(_req, res);
 });
 
 app.listen(WEB_SERVER_PORT, () => {
