@@ -23,6 +23,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
+            export PATH="/home/ubuntu/.nvm/versions/node/v22.13.0/bin:/home/ubuntu/.local/share/pnpm:/home/ubuntu/.local/bin:$PATH"
+
             echo "==> Pulling latest code..."
             cd /home/ubuntu/hostmyhtmlserv
             git fetch --all
@@ -32,7 +34,6 @@ jobs:
             npm install --production
 
             echo "==> Restarting server with PM2..."
-            export PATH=$PATH:/home/ubuntu/.local/share/pnpm/global/5/.pnpm/pm2@5.4.3/node_modules/pm2/bin
             pm2 restart hostmyhtmlserv || pm2 start index.js --name hostmyhtmlserv
             pm2 save
 
