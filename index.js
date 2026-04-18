@@ -41,13 +41,18 @@ const normalizeIp = (ip) => {
 };
 
 const getClientIp = (req) => {
-  const cf = String(req.headers['cf-connecting-ip'] || '').trim();
-  if (cf) return normalizeIp(cf);
-  const tci = String(req.headers['true-client-ip'] || '').trim();
-  if (tci) return normalizeIp(tci);
-  const xff = String(req.headers['x-forwarded-for'] || '').trim();
-  if (xff) return normalizeIp(xff.split(',')[0].trim());
-  return normalizeIp(req.socket?.remoteAddress || '');
+  const candidates = [
+    req.ip, // uses Express trust-proxy logic
+    String(req.headers['cf-connecting-ip'] || '').trim(),
+    String(req.headers['true-client-ip'] || '').trim(),
+    String(req.headers['x-forwarded-for'] || '').split(',')[0].trim(),
+    req.socket?.remoteAddress || '',
+  ];
+  for (const raw of candidates) {
+    const ip = normalizeIp(raw);
+    if (net.isIP(ip)) return ip;
+  }
+  return '';
 };
 
 const parseCookies = (req) => {
