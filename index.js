@@ -358,6 +358,7 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
   const targetUrl = `${INIT_UPSTREAM_URL.replace(/\/$/, '')}${req.originalUrl}`;
   const requestOrigin = getRequestOrigin(req) || '';
   const ip = getClientIp(req) || '';
+  const clientCountry = String(req.headers['cf-ipcountry'] || req.headers['x-client-country'] || '').trim().toUpperCase();
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 12_000);
   try {
@@ -370,6 +371,7 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
         Origin: requestOrigin,
         Referer: `${requestOrigin}/`,
         ...(ip ? { 'X-Forwarded-For': ip, 'X-Real-IP': ip } : {}),
+        ...(clientCountry ? { 'X-Client-Country': clientCountry } : {}),
         ...(WORKER_SHARED_SECRET ? { 'X-Worker-Secret': WORKER_SHARED_SECRET } : {}),
         ...(WEB_GATEWAY_SECRET ? { 'X-Web-Gateway-Secret': WEB_GATEWAY_SECRET } : {}),
       },
