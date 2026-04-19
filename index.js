@@ -387,6 +387,7 @@ const ensureGatewaySession = async (req, uuid) => {
   if (!normalizedUuid || !INIT_UPSTREAM_URL) return { ok: true, uuid: normalizedUuid };
   const requestOrigin = getRequestOrigin(req) || '';
   const ip = getClientIp(req) || '';
+  const clientCountry = String(req.headers['cf-ipcountry'] || req.headers['x-client-country'] || '').trim().toUpperCase();
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 5000);
   try {
@@ -399,7 +400,9 @@ const ensureGatewaySession = async (req, uuid) => {
         Origin: requestOrigin,
         Referer: `${requestOrigin}/`,
         ...(ip ? { 'X-Forwarded-For': ip, 'X-Real-IP': ip } : {}),
+        ...(clientCountry ? { 'X-Client-Country': clientCountry } : {}),
         ...(WORKER_SHARED_SECRET ? { 'X-Worker-Secret': WORKER_SHARED_SECRET } : {}),
+        ...(WEB_GATEWAY_SECRET ? { 'X-Web-Gateway-Secret': WEB_GATEWAY_SECRET } : {}),
       },
       body: JSON.stringify({
         browserInfo: getRequestBrowserInfo(req),
@@ -432,6 +435,7 @@ const fetchInitPayload = async (req) => {
   try {
     const origin = getRequestOrigin(req) || '';
     const ip = getClientIp(req) || '';
+    const clientCountry = String(req.headers['cf-ipcountry'] || req.headers['x-client-country'] || '').trim().toUpperCase();
     const uuid = resolvePreferredUuid(req);
     const body = JSON.stringify({
       browserInfo: getRequestBrowserInfo(req),
@@ -443,7 +447,9 @@ const fetchInitPayload = async (req) => {
       Origin: origin,
       Referer: `${origin}/`,
       'X-Forwarded-For': ip,
+      ...(clientCountry ? { 'X-Client-Country': clientCountry } : {}),
       ...(WORKER_SHARED_SECRET ? { 'X-Worker-Secret': WORKER_SHARED_SECRET } : {}),
+      ...(WEB_GATEWAY_SECRET ? { 'X-Web-Gateway-Secret': WEB_GATEWAY_SECRET } : {}),
     };
     const response = await fetch(`${INIT_UPSTREAM_URL.replace(/\/$/, '')}/api/userinit`, {
       method: 'POST',
