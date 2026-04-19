@@ -450,13 +450,45 @@ const fetchInitPayload = async (req) => {
       headers,
       body,
     });
-    if (!response.ok) return null;
+    if (!response.ok) {
+      const raw = await response.text().catch(() => '');
+      console.warn('[WEB SERVER] /api/userinit failed', {
+        status: response.status,
+        body: raw ? raw.slice(0, 300) : '',
+      });
+      return null;
+    }
     const data = await response.json();
-    if (!data || typeof data !== 'object') return null;
+    if (!data || typeof data !== 'object') {
+      console.warn('[WEB SERVER] /api/userinit returned invalid payload');
+      return null;
+    }
+    if (!data?.userInfo || !data?.userInfo?.uuid) {
+      console.warn('[WEB SERVER] /api/userinit missing userInfo.uuid', {
+        keys: Object.keys(data || {}),
+      });
+      return null;
+    }
     return data;
-  } catch {
+  } catch (error) {
+    console.warn('[WEB SERVER] /api/userinit request error', String(error?.message || error || 'unknown'));
     return null;
   }
+};
+
+const fetchInitPayloadWithRetry = async (req) => {
+  const attempts = 3;
+  for (let i = 0; i < attempts; i += 1) {
+    const payload = await fetchInitPayload(req);
+    const uuid = String(payload?.userInfo?.uuid || '').trim();
+    if (payload && uuid) {
+      return payload;
+    }
+    if (i < attempts - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 250 * (i + 1)));
+    }
+  }
+  return null;
 };
 
 const sendSpaDocument = async (req, res) => {
@@ -465,8 +497,15 @@ const sendSpaDocument = async (req, res) => {
     return;
   }
 
-  const initPayload = await fetchInitPayload(req);
+  const initPayload = await fetchInitPayloadWithRetry(req);
   const resolvedUuid = String(initPayload?.userInfo?.uuid || '').trim();
+  if (!resolvedUuid) {
+    console.warn('[WEB SERVER] SPA init blocked: missing resolved UUID');
+    return res.status(503).json({
+      error: 'init_unavailable',
+      message: 'Unable to initialize session. Please refresh and try again.',
+    });
+  }
   const edgeClientToken = createEdgeClientToken(req, { uuid: resolvedUuid });
   const edgeProofToken = createEdgeProofToken(req, { uuid: resolvedUuid });
   const bootstrap = {
