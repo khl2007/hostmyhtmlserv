@@ -359,6 +359,12 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
   const requestOrigin = getRequestOrigin(req) || '';
   const ip = getClientIp(req) || '';
   const clientCountry = String(req.headers['cf-ipcountry'] || req.headers['x-client-country'] || '').trim().toUpperCase();
+  const turnstileHeader = String(req.headers['cf-turnstile-response'] || '').trim();
+  const turnstileTokenHeader = String(req.headers['cf-turnstile-token'] || '').trim();
+  const xTurnstileTokenHeader = String(req.headers['x-turnstile-token'] || '').trim();
+  const recaptchaHeader = String(req.headers['x-recaptcha-token'] || '').trim();
+  const recaptchaResponseHeader = String(req.headers['g-recaptcha-response'] || '').trim();
+  const xRecaptchaResponseHeader = String(req.headers['x-recaptcha-response'] || '').trim();
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 12_000);
   try {
@@ -372,6 +378,12 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
         Referer: `${requestOrigin}/`,
         ...(ip ? { 'X-Forwarded-For': ip, 'X-Real-IP': ip } : {}),
         ...(clientCountry ? { 'X-Client-Country': clientCountry } : {}),
+        ...(turnstileHeader ? { 'cf-turnstile-response': turnstileHeader } : {}),
+        ...(turnstileTokenHeader ? { 'CF-Turnstile-Token': turnstileTokenHeader } : {}),
+        ...(xTurnstileTokenHeader ? { 'X-Turnstile-Token': xTurnstileTokenHeader } : {}),
+        ...(recaptchaHeader ? { 'X-Recaptcha-Token': recaptchaHeader } : {}),
+        ...(recaptchaResponseHeader ? { 'g-recaptcha-response': recaptchaResponseHeader } : {}),
+        ...(xRecaptchaResponseHeader ? { 'X-Recaptcha-Response': xRecaptchaResponseHeader } : {}),
         ...(WORKER_SHARED_SECRET ? { 'X-Worker-Secret': WORKER_SHARED_SECRET } : {}),
         ...(WEB_GATEWAY_SECRET ? { 'X-Web-Gateway-Secret': WEB_GATEWAY_SECRET } : {}),
       },
