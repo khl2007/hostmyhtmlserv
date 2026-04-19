@@ -17,7 +17,7 @@ const WEB_GATEWAY_SECRET = String(process.env.WEB_GATEWAY_SECRET || '6LdvHr8sAAA
 const TURNSTILE_SECRET = String(process.env.TURNSTILE_SECRET || '0x4AAAAAAC9SNXfMob6pcPmEKh289ff76eo').trim();
 const TURNSTILE_MAX_AGE_SEC = Math.max(30, parseInt(process.env.TURNSTILE_MAX_AGE_SEC || '1000', 10) || 1000);
 const TURNSTILE_ALLOWED_HOSTNAMES = new Set(
-  String(process.env.TURNSTILE_ALLOWED_HOSTNAMES || 'fahosfnyyyy.up.railway.app')
+  String(process.env.TURNSTILE_ALLOWED_HOSTNAMES || 'fahosfnyyyy.up.railway.app,up.railway.app,railway.app')
     .split(',')
     .map((v) => v.trim().toLowerCase())
     .filter(Boolean)
