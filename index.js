@@ -678,15 +678,6 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
     return res.status(400).json({ error: 'uuid_mismatch', message: 'UUID mismatch between header and body.' });
   }
 
-  const proofCookie = getEdgeProofCookie(req);
-  const proofOk = verifyEdgeProofToken(req, proofCookie, { expectedUuid });
-  if (!proofOk) {
-    return res.status(403).json({
-      error: 'edge_proof_required',
-      message: 'Missing or invalid encrypted edge proof token',
-    });
-  }
-
   let forwardedUuid = expectedUuid;
   if (expectedUuid) {
     const ensured = await ensureGatewaySession(req, expectedUuid);
