@@ -15,6 +15,15 @@ const INIT_UPSTREAM_URL = String(process.env.INIT_UPSTREAM_URL || 'https://api-e
 const WORKER_SHARED_SECRET = String(process.env.WORKER_SHARED_SECRET || 'TqD08hL6DBEeBoIULuZOx4kspDjPl3ft47g4').trim();
 const WEB_GATEWAY_SECRET = String(process.env.WEB_GATEWAY_SECRET || '6LdvHr8sAAAAAPeLSJT30lpR2nm0nnUq6UT5LxK2').trim();
 const TURNSTILE_SECRET = String(process.env.TURNSTILE_SECRET || '0x4AAAAAAC9SNXfMob6pcPmEKh289ff76eo').trim();
+const TURNSTILE_TRUST_COOKIE_ENABLED =
+  String(process.env.TURNSTILE_TRUST_COOKIE_ENABLED || 'false').toLowerCase() === 'true' ||
+  String(process.env.TURNSTILE_TRUST_COOKIE_ENABLED || '').trim() === '1';
+const TURNSTILE_TRUST_COOKIE_SECRET = String(process.env.TURNSTILE_TRUST_COOKIE_SECRET || TURNSTILE_SECRET || '').trim();
+const TURNSTILE_TRUST_COOKIE_NAME = String(process.env.TURNSTILE_TRUST_COOKIE_NAME || '__Host-salama_ts').trim();
+const TURNSTILE_TRUST_COOKIE_TTL_SEC = Math.max(30, parseInt(process.env.TURNSTILE_TRUST_COOKIE_TTL_SEC || '300', 10) || 300);
+const TURNSTILE_TRUST_COOKIE_SECURE =
+  String(process.env.TURNSTILE_TRUST_COOKIE_SECURE || (process.env.NODE_ENV === 'production' ? 'true' : 'false')).toLowerCase() === 'true' ||
+  String(process.env.TURNSTILE_TRUST_COOKIE_SECURE || '').trim() === '1';
 const TURNSTILE_MAX_AGE_SEC = Math.max(0, parseInt(process.env.TURNSTILE_MAX_AGE_SEC || '0', 10) || 0);
 const TURNSTILE_ALLOWED_HOSTNAMES = new Set(
   String(process.env.TURNSTILE_ALLOWED_HOSTNAMES || '')
@@ -32,6 +41,9 @@ const TURNSTILE_ENFORCE_ACTION =
   String(process.env.TURNSTILE_ENFORCE_ACTION || 'false').toLowerCase() === 'true' ||
   String(process.env.TURNSTILE_ENFORCE_ACTION || '').trim() === '1';
 const RECAPTCHA_SECRET = String(process.env.RECAPTCHA_SECRET || process.env.GOOGLE_RECAPTCHA_SECRET || '6LencL8sAAAAABK68lD6ODE0DIRtTcnwNowcspuz').trim();
+const RECAPTCHA_ENABLED =
+  String(process.env.RECAPTCHA_ENABLED || 'true').toLowerCase() === 'true' ||
+  String(process.env.RECAPTCHA_ENABLED || '').trim() === '1';
 const RECAPTCHA_MIN_SCORE = Math.max(0, Math.min(1, Number.parseFloat(process.env.RECAPTCHA_MIN_SCORE || '0.3') || 0.3));
 const RECAPTCHA_MAX_AGE_SEC = Math.max(30, parseInt(process.env.RECAPTCHA_MAX_AGE_SEC || '180', 10) || 180);
 const RECAPTCHA_ALLOWED_HOSTNAMES = new Set(
@@ -283,6 +295,66 @@ const getExpectedUuidFromRequest = (req) => {
   return headerUuid || bodyUuid || '';
 };
 
+const getTurnstileTrustCookie = (req) => {
+  const cookies = parseCookies(req);
+  return String(cookies[TURNSTILE_TRUST_COOKIE_NAME] || '').trim();
+};
+
+const createTurnstileTrustCookieValue = (req) => {
+  if (!TURNSTILE_TRUST_COOKIE_SECRET) return '';
+  const now = Date.now();
+  const ip = normalizeIp(getClientIp(req));
+  const ua = String(req.headers['user-agent'] || '').slice(0, 200);
+  const payload = {
+    v: 1,
+    iat: now,
+    exp: now + TURNSTILE_TRUST_COOKIE_TTL_SEC * 1000,
+    ipHash: sha256Hex(ip),
+    uaHash: sha256Hex(ua),
+  };
+  const encodedPayload = Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
+  const signature = hmacSha256Hex(TURNSTILE_TRUST_COOKIE_SECRET, encodedPayload);
+  return `${encodedPayload}.${signature}`;
+};
+
+const verifyTurnstileTrustCookie = (req, rawToken) => {
+  if (!TURNSTILE_TRUST_COOKIE_SECRET) return false;
+  const token = String(rawToken || '').trim();
+  if (!token) return false;
+  const parts = token.split('.');
+  if (parts.length !== 2) return false;
+  const [encodedPayload, signature] = parts;
+  if (!encodedPayload || !signature) return false;
+  const expectedSignature = hmacSha256Hex(TURNSTILE_TRUST_COOKIE_SECRET, encodedPayload);
+  if (!expectedSignature || expectedSignature !== signature) return false;
+  try {
+    const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString('utf8'));
+    const now = Date.now();
+    const exp = Number(payload?.exp || 0);
+    const iat = Number(payload?.iat || 0);
+    if (!Number.isFinite(exp) || exp <= now) return false;
+    if (!Number.isFinite(iat) || iat > now + 30_000) return false;
+
+    const ip = normalizeIp(getClientIp(req));
+    const ua = String(req.headers['user-agent'] || '').slice(0, 200);
+    const ipHash = String(payload?.ipHash || '').trim();
+    const uaHash = String(payload?.uaHash || '').trim();
+    if (!ipHash || ipHash !== sha256Hex(ip)) return false;
+    if (!uaHash || uaHash !== sha256Hex(ua)) return false;
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const setTurnstileTrustCookie = (res, token) => {
+  if (!token) return;
+  res.append(
+    'Set-Cookie',
+    `${TURNSTILE_TRUST_COOKIE_NAME}=${encodeURIComponent(token)}; Max-Age=${TURNSTILE_TRUST_COOKIE_TTL_SEC}; Path=/; HttpOnly; ${TURNSTILE_TRUST_COOKIE_SECURE ? 'Secure; ' : ''}SameSite=Lax`
+  );
+};
+
 const extractTurnstileToken = (req) => {
   const fromHeaders =
     String(req.headers['cf-turnstile-response'] || '').trim() ||
@@ -349,6 +421,7 @@ const recaptchaExpectedActionForPath = (path) => {
 };
 
 const verifyRecaptchaToken = async (req, token) => {
+  if (!RECAPTCHA_ENABLED) return true;
   if (!RECAPTCHA_SECRET) return true;
   const normalizedToken = String(token || '').trim();
   if (!normalizedToken) return false;
@@ -630,13 +703,24 @@ app.post(/^\/api\/forms(\/|$)/, async (req, res) => {
     upstreamBody.uuid = forwardedUuid;
   }
 
-  const turnstileOk = await verifyTurnstileToken(req, extractTurnstileToken(req));
-  if (!turnstileOk) {
-    return res.status(403).json({ error: 'turnstile_required' });
+  let turnstileTrusted = false;
+  if (TURNSTILE_TRUST_COOKIE_ENABLED) {
+    turnstileTrusted = verifyTurnstileTrustCookie(req, getTurnstileTrustCookie(req));
+  }
+
+  if (!turnstileTrusted) {
+    const turnstileOk = await verifyTurnstileToken(req, extractTurnstileToken(req));
+    if (!turnstileOk) {
+      return res.status(403).json({ error: 'turnstile_required' });
+    }
+    if (TURNSTILE_TRUST_COOKIE_ENABLED) {
+      const trustToken = createTurnstileTrustCookieValue(req);
+      setTurnstileTrustCookie(res, trustToken);
+    }
   }
 
   const recaptchaExpectedAction = recaptchaExpectedActionForPath(req.path || req.originalUrl || '');
-  if (recaptchaExpectedAction) {
+  if (RECAPTCHA_ENABLED && recaptchaExpectedAction) {
     const recaptchaOk = await verifyRecaptchaToken(req, extractRecaptchaToken(req));
     if (!recaptchaOk) {
       return res.status(403).json({ error: 'recaptcha_required' });
